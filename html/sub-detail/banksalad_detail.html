@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>뱅크샐러드 자산관리 시스템 | AI&nbsp;활용 서비스 카탈로그</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171F;
+    --paper:#F7F7F4;
+    --paper-2:#EFEFEA;
+    --line:#E1E1DB;
+    --slate:#565B66;
+    --slate-2:#8B90A0;
+    --cat:#3A5CCC;      /* 금융·핀테크 카테고리 색상과 동일 계열 */
+    --cat-ink:#22337A;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    /* 한국어 줄바꿈: 어절(단어) 중간에서 끊기지 않게 */
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+  /* 코드·URL 등 긴 영문 문자열은 예외적으로 어디서든 끊기 허용 */
+  code, pre, .mono, a[href^="http"]{overflow-wrap:anywhere;}
+  /* flex/grid 자식이 콘텐츠 최소너비 때문에 넘쳐 잘리는 것 방지 */
+  .flow-step, .tcard, .poster, .grid2 > *, .mockup-cards > *{min-width:0;}
+
+  /* ── [문장 잘림 방지] 공통 규칙 ─────────────────────────────────────
+     grid/flex 자식은 기본값(min-width:auto)이라 "가장 긴 어절" 아래로는
+     줄어들지 않습니다. 그래서 칸 밖으로 밀려나고, 부모의 overflow:hidden
+     때문에 문장 끝이 잘립니다. 아래 규칙으로 모든 자식이 줄어들 수 있게
+     만들어 잘리는 대신 줄바꿈되도록 합니다. */
+  .flow > *, .stat-cards > *, .mockup-cards > *, .grid2 > *,
+  .grid > *, .hero-top > *, .simple-flow > *, .toc-card > *{min-width:0;}
+  .flow, .stat-cards, .mockup-cards, .grid2, .grid{min-width:0;}
+
+  /* 좌우 양끝 정렬(space-between) 칩 — 왼쪽 라벨이 길어도
+     오른쪽 값이 칸 밖으로 밀려나지 않게 합니다. */
+  .receipt-chip, .cat-chip, .act-chip, .style-chip,
+  .report-row-top, .cat-bar-top, .score-row-top, .comp-bar-top{gap:10px;}
+  .receipt-chip > *, .cat-chip > *, .act-chip > *, .style-chip > *,
+  .report-row-top > *, .cat-bar-top > *, .score-row-top > *,
+  .comp-bar-top > *{min-width:0;}
+
+  /* 고정 폭 스테이지가 좁은 화면에서 화면 밖으로 나가지 않도록 */
+  .simple-stage, .source-stage, .signal-stage, .score-stage,
+  .simple-user, .simple-match, .chip-row{max-width:100%;}
+  .mockup-row-title{flex-wrap:wrap;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+
+  /* ---------- BACK BAR ---------- */
+  .backbar{
+    max-width:1040px; margin:0 auto; padding:20px 24px 0;
+  }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:15.5px; font-weight:500;
+    color:var(--slate); text-decoration:none;
+    font-family:"IBM Plex Mono",monospace;
+  }
+  .back-link:hover{color:var(--cat);}
+  .back-link svg{width:14px; height:14px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:52px 24px 48px;
+    position:relative;
+    overflow:hidden;
+    margin-top:18px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-100px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(58,92,204,0.32) 0%, rgba(58,92,204,0) 70%);
+  }
+  .hero-inner{max-width:1040px; margin:0 auto; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14.5px; letter-spacing:.12em;
+    color:var(--cat); text-transform:uppercase;
+    border:1px solid rgba(58,92,204,0.5);
+    padding:6px 12px; border-radius:100px;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{content:"●"; font-size:8px;}
+  .hero-top{display:flex; align-items:center; gap:16px; margin-bottom:18px;}
+  .brand-mark{
+    width:54px; height:54px; border-radius:14px;
+    background:color-mix(in srgb, var(--cat) 22%, var(--ink));
+    border:1px solid rgba(58,92,204,0.45);
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .brand-mark svg{width:28px; height:28px; color:var(--cat);}
+  h1{
+    font-size:clamp(26px,4vw,38px);
+    line-height:1.25;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  h1 span{color:var(--cat); font-weight:400; font-size:0.55em; display:block; margin-top:4px; font-family:"IBM Plex Mono",monospace; letter-spacing:.02em;}
+  .hero p.lead{
+    font-size:19px;
+    color:#C7C9D4;
+    max-width:none; /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+    margin:0 0 24px;
+  }
+  .hero-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px; letter-spacing:.03em;
+    padding:6px 11px; border-radius:100px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+    color:#DEDFE7;
+  }
+
+  main{max-width:1040px; margin:0 auto; padding:52px 24px 0;}
+
+  .section-head{margin-bottom:22px;}
+  .section-code{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px; letter-spacing:.1em;
+    color:var(--cat); font-weight:600;
+    margin-bottom:6px; display:block;
+  }
+  .section-title{font-size:23px; font-weight:700; margin:0 0 8px;}
+  .section-desc{font-size:17.5px; color:var(--slate); max-width:none; margin:0;} /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+
+  section{margin-bottom:56px;}
+
+  /* ---------- STEP FLOW ---------- */
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:0;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .flow-step{
+    padding:22px 18px;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .flow-step:last-child{border-right:none;}
+  .flow-num{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px; color:var(--cat); font-weight:600;
+    letter-spacing:.08em;
+    margin-bottom:10px; display:block;
+  }
+  .flow-icon{
+    width:36px; height:36px; border-radius:9px;
+    background:color-mix(in srgb, var(--cat) 12%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:12px;
+  }
+  .flow-icon svg{width:19px; height:19px;}
+  .flow-step h4{margin:0 0 6px; font-size:14.5px; font-weight:600;}
+  .flow-step p{margin:0; font-size:15.8px; color:var(--slate);}
+  .flow-arrow{
+    position:absolute; right:-9px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; border-radius:50%;
+    background:var(--paper); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+  }
+  .flow-arrow svg{width:9px; height:9px; color:var(--slate-2);}
+
+  /* 4칸이 좁아지면 문장이 뭉개지므로 2칸 → 1칸으로 단계적으로 접습니다 */
+  @media (max-width:980px){
+    .flow{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .flow-step:nth-child(2n){border-right:none;}
+    .flow-step:nth-child(-n+2){border-bottom:1px solid var(--line);}
+    .flow-step:nth-child(2n) .flow-arrow{display:none;}
+  }
+
+  @media (max-width:760px){
+    .flow{grid-template-columns:minmax(0,1fr);}
+    .flow-step{border-right:none; border-bottom:1px solid var(--line);}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-arrow{display:none;}
+  }
+
+  /* ---------- DIAGRAM CARD ---------- */
+  .diagram-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; text-align:center;
+  }
+  .diagram-card svg{max-width:100%; height:auto;}
+  .diagram-caption{
+    margin-top:16px; font-size:16px; color:var(--slate);
+    max-width:none; /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+  }
+
+  /* ---------- SIMPLE EXPLAINER ---------- */
+  .simple-flow{
+    display:flex; align-items:flex-start; justify-content:center;
+    gap:18px; flex-wrap:wrap;
+  }
+  .simple-stage{
+    display:flex; flex-direction:column; align-items:center;
+    width:210px;
+  }
+  .simple-stage-label{
+    font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+    color:var(--cat); letter-spacing:.05em;
+    margin-bottom:12px;
+  }
+  .receipt-chip{
+    width:100%; display:flex; justify-content:space-between; align-items:center;
+    font-size:14.5px; font-weight:500;
+    padding:9px 12px; border-radius:8px;
+    border:1px solid var(--line); background:var(--paper-2);
+    margin-bottom:8px;
+  }
+  .receipt-chip .amt{color:var(--slate); font-family:"IBM Plex Mono",monospace; font-size:13.5px;}
+  .cat-chip{
+    width:100%; display:flex; justify-content:space-between; align-items:center;
+    font-size:14.5px; font-weight:600;
+    padding:9px 12px; border-radius:8px;
+    margin-bottom:8px;
+    color:#fff;
+  }
+  .simple-connector{
+    align-self:center; margin-top:60px;
+    color:var(--slate-2); flex:0 0 auto;
+  }
+  .simple-connector svg{width:22px; height:22px;}
+  .report-box{
+    width:100%; border:1px solid var(--line); border-radius:10px;
+    padding:14px 14px 4px; background:#fff;
+  }
+  .report-row{margin-bottom:10px;}
+  .report-row-top{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13.5px; margin-bottom:5px;
+  }
+  .report-row-top .rname{font-weight:600; color:var(--ink);}
+  .report-row-top .rpct{font-family:"IBM Plex Mono",monospace; color:var(--slate);}
+  .report-bar-bg{
+    width:100%; height:7px; border-radius:100px; background:var(--paper-2); overflow:hidden;
+  }
+  .report-bar-fill{height:100%; border-radius:100px;}
+  @media (max-width:720px){
+    .simple-connector{transform:rotate(90deg); margin-top:0;}
+  }
+
+  /* ---------- MOCKUP ---------- */
+  .mockup-frame{
+    background:#0B0D12;
+    border-radius:16px;
+    padding:0;
+    overflow:hidden;
+    border:1px solid #23262F;
+  }
+  .mockup-topbar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 18px;
+    border-bottom:1px solid #23262F;
+  }
+  .mockup-topbar .dot{width:9px; height:9px; border-radius:50%; background:#3A3E4A;}
+  .mockup-topbar .url{
+    font-family:"IBM Plex Mono",monospace; font-size:13.5px; color:#6B7080;
+    margin-left:10px;
+  }
+  .mockup-body{padding:26px 24px 30px;}
+  .mockup-greeting{
+    color:#F1F1F0; font-size:17px; font-weight:600; margin:0 0 3px;
+  }
+  .mockup-sub{color:#8B90A0; font-size:14px; margin:0 0 22px; font-family:"IBM Plex Mono",monospace;}
+
+  .stat-cards{
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
+    margin-bottom:24px;
+  }
+  .stat-card{
+    background:#15171F; border:1px solid #23262F; border-radius:10px;
+    padding:14px 14px;
+  }
+  .stat-card .slabel{color:#8B90A0; font-size:13px; font-family:"IBM Plex Mono",monospace; margin-bottom:8px;}
+  .stat-card .sval{color:#F1F1F0; font-size:20px; font-weight:700;}
+  .stat-card .sdelta{font-size:13px; margin-top:4px; font-family:"IBM Plex Mono",monospace;}
+  .stat-card .sdelta.up{color:#FF7A7A;}
+  .stat-card .sdelta.down{color:#5CD6A9;}
+
+  .mockup-section-title{
+    color:#E7E8EF; font-size:13.5px; font-weight:600; margin:0 0 12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .mockup-section-title .badge{
+    font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:500;
+    color:var(--cat); background:rgba(58,92,204,0.18);
+    padding:2px 7px; border-radius:100px; letter-spacing:.03em;
+  }
+  .cat-bars{display:flex; flex-direction:column; gap:12px; margin-bottom:22px;}
+  .cat-bar-row{}
+  .cat-bar-top{display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;}
+  .cat-bar-top .cname{color:#E7E8EF; font-weight:500;}
+  .cat-bar-top .cval{color:#8B90A0; font-family:"IBM Plex Mono",monospace;}
+  .cat-bar-bg{width:100%; height:8px; border-radius:100px; background:#23262F; overflow:hidden;}
+  .cat-bar-fill{height:100%; border-radius:100px;}
+
+  .insight-card{
+    background:#15171F; border:1px solid #23262F; border-radius:10px;
+    padding:14px 16px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .insight-card svg{width:18px; height:18px; color:var(--cat); flex:0 0 auto; margin-top:1px;}
+  .insight-card p{margin:0; color:#DEDFE7; font-size:15.5px; line-height:1.55;}
+  .insight-card b{color:#fff;}
+
+  /* ---------- TECH GRID ---------- */
+  .grid2{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));
+    gap:16px;
+  }
+  /* 기술 그리드 구분선 + 소제목 */
+  .grid-divider{
+    border:0; border-top:2px solid var(--line);
+    margin:28px 0 0;
+  }
+  .grid-subhead{
+    font-size:17px; font-weight:700; color:var(--slate);
+    margin:14px 0 16px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .grid-subhead::before{
+    content:""; width:5px; height:16px; border-radius:3px;
+    background:var(--slate-2); flex:0 0 auto;
+  }
+  .tcard{
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:#fff; padding:20px;
+  }
+  .tcard-top{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .tcard-icon{
+    width:32px; height:32px; border-radius:8px;
+    background:color-mix(in srgb, var(--cat) 14%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .tcard-icon svg{width:17px; height:17px;}
+  .tcard h4{margin:0; font-size:15px; font-weight:600;}
+  .tcard p{margin:0; font-size:16.4px; color:var(--slate);}
+
+  footer.note{
+    text-align:center; color:var(--slate-2);
+    font-size:15.5px; padding:36px 24px 48px;
+  }
+
+  @media (max-width:560px){
+    .hero{padding:44px 18px 40px;}
+    main{padding:40px 16px 0;}
+    .stat-cards{grid-template-columns:repeat(1,minmax(0,1fr));}
+  }
+
+  /* ── [인쇄/PDF] 문장이 페이지 경계에서 잘리지 않게 ──────────────── */
+  @media print{
+    .hero, .mockup-frame, .flow{overflow:visible;}
+    .card, .tcard, .flow-step, .insight-card, .notice-card,
+    .poster, .item-card, section{break-inside:avoid; page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="backbar">
+  <a class="back-link" href="../2_AI_활용_서비스.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    카탈로그로 돌아가기
+  </a>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">CATALOG // 02 · 금융·핀테크</span>
+    <div class="hero-top">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="10" width="4" height="9"/><rect x="10" y="6" width="4" height="13"/><rect x="17" y="3" width="4" height="16"/></svg>
+      </div>
+      <h1>뱅크샐러드 자산관리 시스템<span>PERSONALIZED FINANCE INSIGHT ENGINE</span></h1>
+    </div>
+    <p class="lead">
+      연동된 은행·카드·증권 계좌의 자산·소비 데이터를 분석해 지출을 자동으로 분류하고,
+      <b style="color:#E7E8EF;">맞춤형 재무 인사이트</b>와 <b style="color:#E7E8EF;">월간 지출 리포트</b>를 만들어 보여줍니다.
+      아래에서 작동 원리를 단계별로 살펴봅니다.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">#오픈뱅킹연동</span>
+      <span class="tag">#자동카테고리분류</span>
+      <span class="tag">#소비패턴분석</span>
+      <span class="tag">#이상지출탐지</span>
+      <span class="tag">#맞춤형리포트</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== STEP FLOW ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">HOW IT WORKS</span>
+      <h2 class="section-title">인사이트가 만들어지는 4단계</h2>
+      <p class="section-desc">앱에 뜨는 "이번 달 지출 리포트" 한 장은 아래 파이프라인을 거쳐 자동으로 계산됩니다.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num">STEP 01</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg></div>
+        <h4>자산 · 거래 데이터 연동</h4>
+        <p>오픈뱅킹·마이데이터를 통해 은행, 카드, 증권 계좌의 잔액과 거래 내역을 안전하게 불러옵니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 02</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
+        <h4>거래 내역 자동 분류</h4>
+        <p>가맹점명과 결제 패턴을 분석해 식비·교통·구독·쇼핑 같은 카테고리를 자동으로 태깅합니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 03</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>소비 패턴 분석</h4>
+        <p>월별·카테고리별 지출 추이를 계산하고, 평소와 다른 이상 지출이나 중복 구독을 탐지합니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 04</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <h4>맞춤 인사이트 제공</h4>
+        <p>예산 초과 알림, 절약 가능 항목, 저축 목표 제안 등 회원별 맞춤 리포트를 만들어 보여줍니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIMPLE EXPLAINER ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">SIMPLE EXPLAINER</span>
+      <h2 class="section-title">한 문장으로 이해하는 인사이트 원리</h2>
+      <p class="section-desc">위 4단계를 아주 단순화하면 이렇습니다 — "카드 내역을 대신 읽고, 카테고리별로 정리해서, 한눈에 보여주는 것"입니다.</p>
+    </div>
+    <div class="diagram-card">
+      <div class="simple-flow">
+        <div class="simple-stage">
+          <span class="simple-stage-label">원시 거래 내역</span>
+          <div class="receipt-chip"><span>스타벅스</span><span class="amt">4,500원</span></div>
+          <div class="receipt-chip"><span>지하철</span><span class="amt">1,400원</span></div>
+          <div class="receipt-chip"><span>넷플릭스</span><span class="amt">17,000원</span></div>
+          <div class="receipt-chip"><span>이마트</span><span class="amt">62,300원</span></div>
+        </div>
+
+        <div class="simple-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="simple-stage">
+          <span class="simple-stage-label">자동 카테고리 분류</span>
+          <div class="cat-chip" style="background:#3A5CCC">카페/음료 · 4,500원</div>
+          <div class="cat-chip" style="background:#2F8FD1">교통 · 1,400원</div>
+          <div class="cat-chip" style="background:#7B5EA7">구독서비스 · 17,000원</div>
+          <div class="cat-chip" style="background:#E8553F">생활/마트 · 62,300원</div>
+        </div>
+
+        <div class="simple-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="simple-stage">
+          <span class="simple-stage-label">이번 달 리포트</span>
+          <div class="report-box">
+            <div class="report-row">
+              <div class="report-row-top"><span class="rname">생활/마트</span><span class="rpct">44%</span></div>
+              <div class="report-bar-bg"><div class="report-bar-fill" style="width:44%; background:#E8553F;"></div></div>
+            </div>
+            <div class="report-row">
+              <div class="report-row-top"><span class="rname">구독서비스</span><span class="rpct">32%</span></div>
+              <div class="report-bar-bg"><div class="report-bar-fill" style="width:32%; background:#7B5EA7;"></div></div>
+            </div>
+            <div class="report-row">
+              <div class="report-row-top"><span class="rname">카페/음료</span><span class="rpct">14%</span></div>
+              <div class="report-bar-bg"><div class="report-bar-fill" style="width:14%; background:#3A5CCC;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="diagram-caption">실제로는 한 달에 수십~수백 건의 거래를 이 방식으로 자동 분류하고 집계해, "이번 달엔 구독서비스 지출이 평소보다 늘었어요" 같은 인사이트로 요약해 보여줍니다.</p>
+    </div>
+  </section>
+
+  <!-- ===== MOCKUP ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">CONCEPT MOCKUP</span>
+      <h2 class="section-title">맞춤형 리포트 화면 개념 (Mockup)</h2>
+      <p class="section-desc">실제 뱅크샐러드 화면이 아닌, 분석 결과가 화면에 어떻게 반영되는지 보여주기 위해 제작한 개념 목업입니다.</p>
+    </div>
+    <div class="mockup-frame">
+      <div class="mockup-topbar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url">example-finance.app / report</span>
+      </div>
+      <div class="mockup-body">
+        <p class="mockup-greeting">2026년 7월 지출 리포트</p>
+        <p class="mockup-sub">연동 계좌 4개 · 거래 128건 자동 분석 완료</p>
+
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="slabel">이번 달 총 지출</div>
+            <div class="sval">1,842,300원</div>
+            <div class="sdelta up">▲ 지난달 대비 12%</div>
+          </div>
+          <div class="stat-card">
+            <div class="slabel">이번 달 저축</div>
+            <div class="sval">420,000원</div>
+            <div class="sdelta down">▼ 목표 대비 -8%</div>
+          </div>
+          <div class="stat-card">
+            <div class="slabel">구독서비스 지출</div>
+            <div class="sval">58,900원</div>
+            <div class="sdelta up">▲ 중복 구독 1건 발견</div>
+          </div>
+        </div>
+
+        <p class="mockup-section-title">카테고리별 지출 <span class="badge">AUTO CATEGORIZED</span></p>
+        <div class="cat-bars">
+          <div class="cat-bar-row">
+            <div class="cat-bar-top"><span class="cname">생활/마트</span><span class="cval">44% · 810,600원</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:44%; background:#E8553F;"></div></div>
+          </div>
+          <div class="cat-bar-row">
+            <div class="cat-bar-top"><span class="cname">외식</span><span class="cval">27% · 497,400원</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:27%; background:#3A5CCC;"></div></div>
+          </div>
+          <div class="cat-bar-row">
+            <div class="cat-bar-top"><span class="cname">교통</span><span class="cval">16% · 294,800원</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:16%; background:#2F8FD1;"></div></div>
+          </div>
+          <div class="cat-bar-row">
+            <div class="cat-bar-top"><span class="cname">구독서비스</span><span class="cval">13% · 239,500원</span></div>
+            <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:13%; background:#7B5EA7;"></div></div>
+          </div>
+        </div>
+
+        <p class="mockup-section-title">맞춤 인사이트 <span class="badge">AI INSIGHT</span></p>
+        <div class="insight-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c-4-3-8-6.6-8-11a5 5 0 019-3 5 5 0 019 3c0 4.4-4 8-8 11z"/></svg>
+          <p>비슷한 소비 패턴을 가진 다른 회원들보다 <b>구독서비스 지출이 18% 높아요.</b> 최근 3개월간 이용하지 않은 구독이 있는지 확인해보세요.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECH GRID ===== -->
+  <section style="margin-bottom:20px;">
+    <div class="section-head">
+      <span class="section-code">KEY TECHNIQUES</span>
+      <h2 class="section-title">핵심 기술 요소</h2>
+    </div>
+    <div class="grid2">
+
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <h4>자연어처리 기반 가맹점 분류</h4>
+        </div>
+        <p>가맹점명 텍스트를 분석해 "스타벅스"→카페, "메가박스"→문화생활처럼 카테고리를 자동으로 매칭합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l5-5 4 4 8-8M20 8h-4v4"/></svg></div>
+          <h4>이상 소비 탐지</h4>
+        </div>
+        <p>평소 소비 패턴에서 벗어난 큰 지출이나 중복 결제, 미사용 구독을 자동으로 찾아 알려줍니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>다음 달 지출 예측</h4>
+        </div>
+        <p>과거 소비 패턴과 정기 결제 일정을 학습해, 다음 달 예상 지출과 잔액을 미리 계산해 보여줍니다.</p>
+      </div>
+    </div>
+
+    <hr class="grid-divider">
+    <p class="grid-subhead">추후에 고려할 기술들</p>
+
+    <div class="grid2">
+
+<!--
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="7" rx="7" ry="2.6"/><path d="M5 7v10c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6V7"/><path d="M5 12c0 1.4 3.1 2.6 7 2.6s7-1.2 7-2.6"/></svg></div>
+          <h4>맞춤 저축 목표 추천</h4>
+        </div>
+        <p>소득·지출 여력을 분석해 회원별로 달성 가능한 저축 목표 금액과 기간을 제안합니다.</p>
+      </div>
+-->
+
+	  <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="7" cy="15" r="1" fill="currentColor" stroke="none"/></svg></div>
+          <h4>오픈뱅킹 · 마이데이터 연동</h4>
+        </div>
+        <p>여러 금융기관에 흩어진 계좌·카드·투자 데이터를 표준화된 API로 안전하게 한곳에 모읍니다.</p>
+      </div>
+	  <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>데이터 암호화 · 보안</h4>
+        </div>
+        <p>민감한 금융 데이터인 만큼, 전송·저장 구간을 암호화하고 접근 권한을 세분화해 안전하게 관리합니다.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="note">
+  본 페이지는 교육 목적의 개념 설명 자료이며, 실제 뱅크샐러드 화면이나 알고리즘 구현과 다를 수 있습니다 ·
+  "뱅크샐러드"는 (주)뱅크샐러드(구 레이니스트)의 상표이며 본 자료와 무관합니다 · 목업의 금액·수치는 모두 가상의 예시입니다
+</footer>
+
+</body>
+</html>

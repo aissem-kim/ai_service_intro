@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1. AI 서비스 유형</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div class="shell">
+
+  <aside class="side">
+    <div class="kicker">Class Note</div>
+    <div class="brand">🧭 AI 서비스 유형</div>
+    <nav>
+      <a href="#overview"><span class="num">00</span>커리큘럼 개관</a>
+      <a href="#bigpicture"><span class="num">01</span>두 가지 축</a>
+      <div class="group-label">기능별 유형 (A)</div>
+      <a href="#a1"><span class="num">A-1</span>텍스트·대화형</a>
+      <a href="#a2"><span class="num">A-2</span>이미지 생성</a>
+      <a href="#a3"><span class="num">A-3</span>영상 생성</a>
+      <a href="#a4"><span class="num">A-4</span>음성·음악</a>
+      <a href="#a5"><span class="num">A-5</span>코드·개발</a>
+      <div class="group-label">제공 형태별 유형 (B)</div>
+      <a href="#b1"><span class="num">B-1</span>앱 / 웹 서비스</a>
+      <a href="#b2"><span class="num">B-2</span>API</a>
+      <a href="#b3"><span class="num">B-3</span>파운데이션 모델</a>
+      <a href="#b4"><span class="num">B-4</span>클라우드 AI 플랫폼</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="eyebrow"><span class="dot"></span>AI SERVICE&nbsp;·&nbsp;MODULE 01</div>
+    <h1 class="title">1. AI 서비스 유형</h1>
+    <p class="subtitle">일반 소프트웨어와 무엇이 다른가? — AI 서비스를 <strong>기능(무엇을 만드는가)</strong>과 <strong>제공 형태(어떻게 접근하는가)</strong>, 두 가지 축으로 나누어 정리합니다.</p>
+
+    <section id="overview">
+      <h2 class="h-section"><span class="tag">00</span>전체 커리큘럼 한눈에 보기</h2>
+      <div class="curriculum">
+        <table>
+          <thead><tr><th>모듈</th><th>주제</th><th>핵심 질문</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>AI 서비스란 무엇인가</td><td class="q">"일반 소프트웨어와 무엇이 다른가요?"</td></tr>
+            <tr><td class="num">2</td><td>두 개의 큰 축: 생성형 vs 판별형</td><td class="q">"만드는 AI와 판단하는 AI"</td></tr>
+            <tr><td class="num">3</td><td>텍스트 AI 서비스</td><td class="q">"챗봇·요약·번역·작문"</td></tr>
+            <tr><td class="num">4</td><td>이미지 AI 서비스</td><td class="q">"생성 / 인식 / 편집"</td></tr>
+            <tr><td class="num">5</td><td>음성 AI 서비스</td><td class="q">"STT / TTS / 음성비서"</td></tr>
+            <tr><td class="num">6</td><td>멀티모달 AI 서비스</td><td class="q">"보고 듣고 읽는 AI"</td></tr>
+            <tr><td class="num">7</td><td>검색·추천·임베딩 서비스</td><td class="q">"찾아주고 골라주는 AI"</td></tr>
+            <tr><td class="num">8</td><td>AI 에이전트 &amp; 자동화 서비스</td><td class="q">"스스로 일하는 AI"</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="bigpicture">
+      <h2 class="h-section"><span class="tag">00</span>큰 그림 — AI 서비스를 보는 두 가지 축</h2>
+      <p class="section-desc">AI 서비스는 두 가지 질문으로 나눠 보면 이해가 쉽습니다.</p>
+
+      <div class="compass">
+        <div class="axis-card" data-axis="①">
+          <div class="chip" style="display:inline-block;">기능 (모달리티)</div>
+          <div class="axis-q">"무엇을 만들거나 처리하는가?"</div>
+          <div class="axis-items">
+            <span class="axis-pill">텍스트</span>
+            <span class="axis-pill">이미지</span>
+            <span class="axis-pill">영상</span>
+            <span class="axis-pill">음성·음악</span>
+            <span class="axis-pill">코드</span>
+          </div>
+        </div>
+        <div class="axis-card coral" data-axis="②">
+          <div class="chip" style="display:inline-block; background:var(--coral-soft); color:#C7451E;">제공 형태</div>
+          <div class="axis-q">"사용자가 어떻게 접근하는가?"</div>
+          <div class="axis-items">
+            <span class="axis-pill">앱(웹/모바일)</span>
+            <span class="axis-pill">API</span>
+            <span class="axis-pill">파운데이션 모델</span>
+            <span class="axis-pill">클라우드 플랫폼</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== A. 기능별 유형 ===================== -->
+    <section id="func">
+      <h2 class="h-section"><span class="tag">A</span>기능별 유형</h2>
+      <p class="section-desc">"무엇을 만들거나 처리하는가"를 기준으로 나눈 다섯 갈래입니다.</p>
+
+      <h3 class="h-sub" id="a1"><span class="chip">A-1</span>텍스트 · 대화형 (LLM 챗봇)</h3>
+      <p class="concept"><strong>개념</strong> — 사람의 언어를 이해하고 생성하는 거대 언어 모델(LLM) 기반 서비스입니다. 질의응답, 요약, 번역, 글쓰기, 코딩 보조까지 가장 활용 범위가 넓습니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>서비스</th><th>제공사</th><th>제공 형태</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>ChatGPT</td><td>OpenAI (미국)</td><td>앱/웹</td><td><a href="https://chatgpt.com" target="_blank">chatgpt.com</a></td></tr>
+            <tr><td>Claude</td><td>Anthropic (미국)</td><td>앱/웹</td><td><a href="https://claude.ai" target="_blank">claude.ai</a></td></tr>
+            <tr><td>Gemini</td><td>Google (미국)</td><td>앱/웹</td><td><a href="https://gemini.google.com" target="_blank">gemini.google.com</a></td></tr>
+            <tr><td>Perplexity</td><td>Perplexity (미국)</td><td>앱/웹 (검색특화)</td><td><a href="https://www.perplexity.ai" target="_blank">perplexity.ai</a></td></tr>
+            <tr style="opacity:.55;"><td>CLOVA X <span style="font-family:var(--mono); font-size:10.5px; color:#C7451E; background:var(--coral-soft); padding:2px 6px; border-radius:10px; margin-left:4px;">서비스 종료</span></td><td>네이버 (국내)</td><td>앱/웹 → 2026.4.9 종료</td><td><span style="font-family:var(--mono); font-size:12px; color:var(--muted);">AI브리핑·AI탭으로 기능 통합</span></td></tr>
+            <tr><td>뤼튼(wrtn)</td><td>뤼튼테크놀로지스 (국내)</td><td>앱/웹</td><td><a href="https://wrtn.ai" target="_blank">wrtn.ai</a></td></tr>
+            <tr><td>Solar</td><td>업스테이지 (국내)</td><td>앱/API</td><td><a href="https://www.upstage.ai" target="_blank">upstage.ai</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h-sub" id="a2"><span class="chip">A-2</span>이미지 생성</h3>
+      <p class="concept"><strong>개념</strong> — 텍스트 설명(프롬프트)을 입력하면 그림·사진·일러스트를 생성합니다. 디자인, 마케팅, 콘텐츠 제작에 활용됩니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>서비스</th><th>제공사</th><th>제공 형태</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>Midjourney</td><td>Midjourney (미국)</td><td>앱/웹</td><td><a href="https://www.midjourney.com" target="_blank">midjourney.com</a></td></tr>
+            <tr><td>DALL·E</td><td>OpenAI (미국)</td><td>ChatGPT 내장/API</td><td><a href="https://openai.com/index/dall-e-3/" target="_blank">openai.com/dall-e</a></td></tr>
+            <tr><td>Stable Diffusion</td><td>Stability AI (영국)</td><td>오픈모델/API</td><td><a href="https://stability.ai" target="_blank">stability.ai</a></td></tr>
+            <tr><td>Adobe Firefly</td><td>Adobe (미국)</td><td>앱/웹</td><td><a href="https://firefly.adobe.com" target="_blank">firefly.adobe.com</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h-sub" id="a3"><span class="chip">A-3</span>영상 생성</h3>
+      <p class="concept"><strong>개념</strong> — 텍스트나 이미지를 입력해 짧은 동영상을 생성합니다. 광고·숏폼 콘텐츠 제작에서 급성장 중인 분야입니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>서비스</th><th>제공사</th><th>제공 형태</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr style="opacity:.55;"><td>Sora <span style="font-family:var(--mono); font-size:10.5px; color:#C7451E; background:var(--coral-soft); padding:2px 6px; border-radius:10px; margin-left:4px;">서비스 종료</span></td><td>OpenAI (미국)</td><td>앱/웹 → 2026.4.26 종료</td><td><span style="font-family:var(--mono); font-size:12px; color:var(--muted);">API도 2026.9.24 종료 예정</span></td></tr>
+            <tr><td>Runway</td><td>Runway (미국)</td><td>앱/웹</td><td><a href="https://runwayml.com" target="_blank">runwayml.com</a></td></tr>
+            <tr><td>Veo</td><td>Google DeepMind (미국)</td><td>앱/API</td><td><a href="https://deepmind.google/models/veo/" target="_blank">deepmind.google/models/veo</a></td></tr>
+            <tr><td>Pika</td><td>Pika (미국)</td><td>앱/웹</td><td><a href="https://pika.art" target="_blank">pika.art</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h-sub" id="a4"><span class="chip">A-4</span>음성 · 음악</h3>
+      <p class="concept"><strong>개념</strong> — 텍스트를 음성으로(TTS), 음성을 텍스트로(STT) 변환하거나, 작곡·보컬을 생성합니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>서비스</th><th>유형</th><th>제공 형태</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>ElevenLabs</td><td>음성 합성(TTS)·더빙</td><td>앱/API</td><td><a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a></td></tr>
+            <tr><td>Suno</td><td>음악(작곡·보컬) 생성</td><td>앱/웹</td><td><a href="https://suno.com" target="_blank">suno.com</a></td></tr>
+            <tr><td>Udio</td><td>음악 생성</td><td>앱/웹</td><td><a href="https://www.udio.com" target="_blank">udio.com</a></td></tr>
+            <tr><td>Whisper</td><td>음성 인식(STT)</td><td>오픈모델/API</td><td><a href="https://openai.com/index/whisper/" target="_blank">openai.com/whisper</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="h-sub" id="a5"><span class="chip">A-5</span>코드 · 개발</h3>
+      <p class="concept"><strong>개념</strong> — 코드 자동 완성, 버그 수정, 자연어로 프로그램을 작성하도록 돕는 개발자용 AI입니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>도구</th><th>개발사 (국가)</th><th>형태</th><th>URL</th></tr></thead>
+          <tbody>
+            <tr><td>Claude Code</td><td>Anthropic (미국)</td><td>CLI/터미널</td><td><span style="font-family:var(--mono); font-size:12.5px; color:var(--muted);">anthropic.com/claude-code</span></td></tr>
+            <tr><td>Codex</td><td>OpenAI (미국)</td><td>CLI/IDE 확장/ChatGPT 앱</td><td><span style="font-family:var(--mono); font-size:12.5px; color:var(--muted);">chatgpt.com/codex</span></td></tr>
+            <tr><td>GitHub Copilot</td><td>GitHub/Microsoft (미국)</td><td>IDE 확장</td><td><span style="font-family:var(--mono); font-size:12.5px; color:var(--muted);">github.com/features/copilot</span></td></tr>
+            <tr><td>Cursor</td><td>Anysphere (미국)</td><td>AI 코드 에디터</td><td><span style="font-family:var(--mono); font-size:12.5px; color:var(--muted);">cursor.com</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== B. 제공 형태별 유형 ===================== -->
+    <section id="provide">
+      <h2 class="h-section"><span class="tag">B</span>제공 형태별 유형</h2>
+      <p class="section-desc">같은 AI 기능이라도 '누가, 어떻게' 쓰느냐에 따라 제공 형태가 나뉩니다. 취업·실무 관점에서 특히 중요한 구분입니다.</p>
+
+      <h3 class="h-sub" id="b1"><span class="chip">B-1</span>앱 / 웹 서비스 (일반 사용자용)</h3>
+      <p class="concept">웹사이트나 모바일 앱에서 <strong>바로 로그인해서 쓰는</strong> 형태입니다. 코딩 지식이 없어도 됩니다. 예: ChatGPT, Claude, Gemini, CLOVA X, 뤼튼.</p>
+
+      <h3 class="h-sub" id="b2"><span class="chip">B-2</span>API (개발자용)</h3>
+      <p class="concept">자신의 서비스·프로그램에 AI를 <strong>코드로 연동</strong>하는 형태입니다. 사용량만큼 요금을 내며, 백엔드 개발자가 다룹니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>서비스</th><th>제공사</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>OpenAI API</td><td>OpenAI</td><td><a href="https://platform.openai.com" target="_blank">platform.openai.com</a></td></tr>
+            <tr><td>Anthropic API (Claude)</td><td>Anthropic</td><td><a href="https://www.anthropic.com/api" target="_blank">anthropic.com/api</a></td></tr>
+            <tr><td>Google AI Studio (Gemini API)</td><td>Google</td><td><a href="https://ai.google.dev" target="_blank">ai.google.dev</a></td></tr>
+            <tr><td>CLOVA Studio</td><td>네이버클라우드</td><td><a href="https://www.ncloud.com/product/aiService/clovaStudio" target="_blank">ncloud.com/.../clovaStudio</a></td></tr>
+            <tr><td>Upstage Console</td><td>업스테이지</td><td><a href="https://console.upstage.ai" target="_blank">console.upstage.ai</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <div class="callout"><strong>📌 앱 vs API 핵심 차이</strong> — 앱은 완성된 화면을 쓰는 것이고, API는 AI 기능을 부품처럼 가져와 내 서비스에 끼워 넣는 것입니다. 채용 공고의 'LLM API 연동 경험'이 바로 이 영역입니다.</div>
+
+      <h3 class="h-sub" id="b3"><span class="chip">B-3</span>파운데이션 모델 / 오픈 모델</h3>
+      <p class="concept">서비스의 '엔진'이 되는 대규모 사전학습 모델 자체입니다. 일부는 가중치를 공개(오픈)하여 직접 내려받아 쓸 수 있습니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>모델</th><th>제공사</th><th>공개 형태</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>GPT 계열</td><td>OpenAI</td><td>비공개(API)</td><td><a href="https://openai.com" target="_blank">openai.com</a></td></tr>
+            <tr><td>Claude 계열</td><td>Anthropic</td><td>비공개(API)</td><td><a href="https://www.anthropic.com" target="_blank">anthropic.com</a></td></tr>
+            <tr><td>Gemini 계열</td><td>Google</td><td>비공개(API)</td><td><a href="https://deepmind.google/models/gemini/" target="_blank">deepmind.google/.../gemini</a></td></tr>
+            <tr><td>Llama 계열</td><td>Meta</td><td>오픈 모델</td><td><a href="https://www.llama.com" target="_blank">llama.com</a></td></tr>
+            <tr><td>Solar</td><td>업스테이지 (국내)</td><td>오픈/상용</td><td><a href="https://www.upstage.ai" target="_blank">upstage.ai</a></td></tr>
+            <tr><td>Hugging Face</td><td>(모델 허브)</td><td>오픈모델 공유 플랫폼</td><td><a href="https://huggingface.co" target="_blank">huggingface.co</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout coral"><strong>📌 Hugging Face</strong>는 개별 서비스라기보다 전 세계 오픈 모델을 모아 두고 공유·다운로드하는 '모델 허브'입니다. 취업 준비 시 오픈 모델을 직접 다뤄 보기에 좋은 출발점입니다.</div>
+
+      <h3 class="h-sub" id="b4"><span class="chip">B-4</span>클라우드 AI 플랫폼 (기업 인프라용)</h3>
+      <p class="concept">기업이 보안·확장성을 갖춰 AI를 도입할 때 쓰는 형태입니다. 여러 회사의 모델을 한 플랫폼에서 골라 쓸 수 있습니다.</p>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>플랫폼</th><th>제공사</th><th>특징</th><th>링크</th></tr></thead>
+          <tbody>
+            <tr><td>Amazon Bedrock</td><td>AWS</td><td>여러 모델을 API로 통합 제공</td><td><a href="https://aws.amazon.com/bedrock/" target="_blank">aws.amazon.com/bedrock</a></td></tr>
+            <tr><td>Azure AI Foundry</td><td>Microsoft</td><td>OpenAI 모델 기업용 제공</td><td><a href="https://azure.microsoft.com/en-us/products/ai-foundry" target="_blank">azure.microsoft.com/.../ai-foundry</a></td></tr>
+            <tr><td>Vertex AI</td><td>Google Cloud</td><td>Gemini 등 모델 운영</td><td><a href="https://cloud.google.com/vertex-ai" target="_blank">cloud.google.com/vertex-ai</a></td></tr>
+            <tr><td>CLOVA Studio</td><td>네이버클라우드 (국내)</td><td>국내 기업용 LLM 플랫폼</td><td><a href="https://www.ncloud.com/product/aiService/clovaStudio" target="_blank">ncloud.com</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout"><strong>📌 실무 포인트</strong> — 앞서 배운 K8S·클라우드 네이티브 수업과 연결됩니다. 기업은 AI 모델을 이런 클라우드 플랫폼 위에 올려 컨테이너로 배포·운영합니다.</div>
+    </section>
+
+
+  </main>
+</div>
+</body>
+<style>
+  :root{
+    --paper:#FAFAF7;
+    --panel:#FFFFFF;
+    --ink:#181B22;
+    --ink-soft:#4A5063;
+    --muted:#8A8F9E;
+    --line:#E6E5E0;
+    --blue:#2D4FFF;
+    --blue-soft:#EEF1FF;
+    --coral:#FF6A4D;
+    --coral-soft:#FFEFEA;
+    --mono:'JetBrains Mono', monospace;
+    --disp:'Space Grotesk', sans-serif;
+    --body:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+
+  /* ---------- layout shell ---------- */
+  .shell{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    max-width:1280px;
+    margin:0 auto;
+  }
+  @media (max-width:900px){
+    .shell{grid-template-columns:1fr;}
+    .side{position:relative !important; height:auto !important; border-right:none !important; border-bottom:1px solid var(--line);}
+  }
+
+  /* ---------- sidebar ---------- */
+  .side{
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    border-right:1px solid var(--line);
+    padding:32px 20px;
+  }
+  .side .kicker{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .side .brand{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:19px;
+    margin-bottom:28px;
+  }
+  .side nav{display:flex; flex-direction:column; gap:2px;}
+  .side nav .group-label{
+    font-family:var(--mono);
+    font-size:14.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--coral);
+    margin:18px 0 6px;
+  }
+  .side nav a{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:13.5px;
+    padding:6px 8px;
+    border-radius:6px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .side nav a:hover{ background:var(--blue-soft); color:var(--blue); }
+  .side nav a .num{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--muted);
+    min-width:20px;
+  }
+
+  /* ---------- main ---------- */
+  .main{ padding:56px 56px 120px; }
+  @media (max-width:640px){ .main{ padding:36px 20px 90px; } }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--blue);
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:14px;
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--coral);}
+
+  h1.title{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:clamp(32px, 4.5vw, 48px);
+    line-height:1.12;
+    margin:0 0 14px;
+    letter-spacing:-.01em;
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:16.5px;
+    max-width:640px;
+    margin-bottom:44px;
+  }
+
+  section{ margin-bottom:64px; scroll-margin-top:28px; }
+  h2.h-section{
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:26px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 6px;
+  }
+  h2.h-section .tag{
+    font-family:var(--mono);
+    font-size:12px;
+    color:#fff;
+    background:var(--ink);
+    padding:3px 9px;
+    border-radius:5px;
+    letter-spacing:.04em;
+  }
+  .section-desc{ color:var(--muted); font-size:14.5px; margin:0 0 28px; }
+
+  h3.h-sub{
+    font-family:var(--disp);
+    font-weight:600;
+    font-size:19px;
+    margin:36px 0 4px;
+    display:flex; align-items:center; gap:10px;
+  }
+  h3.h-sub .chip{
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--blue);
+    background:var(--blue-soft);
+    padding:2px 8px;
+    border-radius:20px;
+  }
+  .concept{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin:8px 0 16px;
+    padding-left:14px;
+    border-left:2px solid var(--line);
+  }
+  .concept strong{color:var(--ink);}
+
+  /* ---------- curriculum overview table ---------- */
+  .curriculum{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  .curriculum table{ width:100%; border-collapse:collapse; }
+  .curriculum th{
+    text-align:left;
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--muted);
+    background:#F5F4F0;
+    padding:12px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .curriculum td{
+    padding:13px 18px;
+    font-size:14px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  .curriculum tr:last-child td{ border-bottom:none; }
+  .curriculum td.num{
+    font-family:var(--mono);
+    color:var(--coral);
+    font-weight:600;
+    width:44px;
+  }
+  .curriculum td.q{ color:var(--muted); font-style:italic; }
+
+  /* ---------- axis compass (signature element) ---------- */
+  .compass{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    margin-top:22px;
+  }
+  @media (max-width:640px){ .compass{grid-template-columns:1fr;} }
+  .axis-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:24px 24px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .axis-card::before{
+    content:attr(data-axis);
+    position:absolute;
+    top:-8px; right:-6px;
+    font-family:var(--disp);
+    font-weight:700;
+    font-size:72px;
+    color:var(--blue-soft);
+    z-index:0;
+    line-height:1;
+  }
+  .axis-card.coral::before{ color:var(--coral-soft); }
+  .axis-card > *{ position:relative; z-index:1; }
+  .axis-card .axis-q{
+    font-family:var(--disp);
+    font-weight:600;
+    font-size:17px;
+    margin:2px 0 12px;
+  }
+  .axis-card .axis-items{
+    display:flex; flex-wrap:wrap; gap:8px;
+  }
+  .axis-pill{
+    font-family:var(--mono);
+    font-size:12.5px;
+    padding:5px 11px;
+    border-radius:20px;
+    background:var(--blue-soft);
+    color:var(--blue);
+    border:1px solid transparent;
+  }
+  .axis-card.coral .axis-pill{ background:var(--coral-soft); color:#C7451E; }
+
+  .callout{
+    background:var(--blue-soft);
+    border-left:3px solid var(--blue);
+    border-radius:0 10px 10px 0;
+    padding:14px 18px;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:18px 0;
+  }
+  .callout strong{ color:var(--ink); }
+  .callout.coral{ background:var(--coral-soft); border-left-color:var(--coral); }
+
+  /* ---------- data tables ---------- */
+  .table-wrap{
+    overflow-x:auto;
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin:14px 0 4px;
+  }
+  table.data{
+    width:100%;
+    border-collapse:collapse;
+    background:var(--panel);
+    font-size:13.5px;
+    min-width:520px;
+  }
+  table.data thead th{
+    text-align:left;
+    background:#F5F4F0;
+    color:var(--ink-soft);
+    font-weight:600;
+    padding:10px 16px;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  table.data td{
+    padding:10px 16px;
+    border-bottom:1px solid var(--line);
+    color:var(--ink);
+  }
+  table.data tbody tr:last-child td{ border-bottom:none; }
+  table.data tbody tr:hover{ background:#FCFBF8; }
+  table.data a{ color:var(--blue); text-decoration:none; font-family:var(--mono); font-size:12.5px; }
+  table.data a:hover{ text-decoration:underline; }
+
+  /* ---------- code block ---------- */
+  .code-block{
+    background:#14161C;
+    color:#E8E9EE;
+    border-radius:12px;
+    padding:20px 22px;
+    font-family:var(--mono);
+    font-size:12.8px;
+    line-height:1.7;
+    overflow-x:auto;
+    margin:16px 0;
+  }
+  .code-block .cm{ color:#6C7386; }
+  .code-block .kw{ color:#7DA8FF; }
+  .code-block .str{ color:#FF9E7A; }
+  .code-block .fn{ color:#B9E28C; }
+
+  footer{
+    border-top:1px solid var(--line);
+    margin-top:60px;
+    padding-top:24px;
+    font-size:12.5px;
+    color:var(--muted);
+    font-family:var(--mono);
+  }
+
+  ::selection{ background:var(--blue); color:#fff; }
+</style>
+</html>

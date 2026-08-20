@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> AI 직무 로드맵 </title>
+
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">AI 융합 과정 </span>
+    <h1>AI<span>직무 지도</span> &amp; 학습 로드맵</h1>
+    <ul class="lead-list">
+      <li>AI 직무를 진입난이도·채용규모·필요역량으로 비교하고,</li>
+      <li>취준생 유형별 4가지 진입 전략을 선택,</li>
+      <li>직무별 단계 로드맵으로 무엇부터 만들지 정합니다.</li>
+    </ul>
+
+  </div>
+</header>
+
+<!-- ============ QUICK NAV ============ -->
+<nav class="toc">
+  <div class="toc-card">
+    <div class="toc-row">
+    <a class="chip" style="--cat:#3A5CCC" href="#s1"><span class="dot"></span>세션 1 · 직무 지도</a>
+    <a class="chip" style="--cat:#E8553F" href="#s2"><span class="dot"></span>세션 2 · 진입 전략</a>
+    <a class="chip" style="--cat:#B8722C" href="#s3"><span class="dot"></span>세션 3 · 공통 기초</a>
+    </div>
+    <div class="toc-row">
+    <button type="button" class="chip tab-nav-btn" style="--cat:#7B5EA7" data-cat="r1" onclick="goToTab('r1')"><span class="dot"></span>로드맵 · AI 앱 개발자</button>
+    <button type="button" class="chip tab-nav-btn" style="--cat:#2F8FD1" data-cat="r2" onclick="goToTab('r2')"><span class="dot"></span>로드맵 · AI 엔지니어</button>
+    <button type="button" class="chip tab-nav-btn" style="--cat:#D1477A" data-cat="r3" onclick="goToTab('r3')"><span class="dot"></span>로드맵 · 품질/평가</button>
+    <button type="button" class="chip tab-nav-btn" style="--cat:#3E9145" data-cat="r4" onclick="goToTab('r4')"><span class="dot"></span>로드맵 · LLMOps</button>
+    <button type="button" class="chip tab-nav-btn" style="--cat:#9C4F96" data-cat="r5" onclick="goToTab('r5')"><span class="dot"></span>로드맵 · 기획/PM</button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+
+
+  <!-- ============ 세션 1 ============ -->
+  <section class="cat collapsible" id="s1" style="--cat:#3A5CCC">
+    <div class="cat-head" onclick="toggleSection('s1')">
+      <div class="cat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3L3 6v15l6-3 6 3 6-3V3l-6 3-6-3z"/><path d="M9 3v15M15 6v15"/>
+        </svg>
+      </div>
+      <div>
+        <span class="cat-code">SESSION // 1</span>
+        <h2 class="cat-title">AI 직무 예시</h2>
+        <p class="cat-desc">"어디를 목표로 삼을 것인가" —  직무를 진입난이도와 신입 채용규모라는 두 축으로 정리하면, 자기가 노려야 할 자리가 보입니다.</p>
+      </div>
+      <div class="cat-toggle"><span class="arrow">▶</span><span class="label-closed">펼치기</span><span class="label-open">접기</span></div>
+    </div>
+    <div class="content">
+      <span class="section-label">전체 비교표</span>
+      <div class="tip"><b>표 읽기 주의</b> — 아래의 <b>진입난이도(★)와 신입 채용규모</b>는 공식 통계가 아니라 <b>강의용으로 정리한 상대적 판단</b>입니다. 직무 경계도 회사마다 다릅니다(같은 "AI 엔지니어"가 A사에서는 앱 개발, B사에서는 모델 서빙일 수 있습니다). 절대적 순위로 외우지 말고 <b>방향을 잡는 지도</b>로 쓰세요.</div>
+      <div class="tbl-wrap wide">
+        <table class="tbl">
+          <tr><th>#</th><th>직무</th><th>하는 일 (한 줄)</th><th>진입난이도</th><th>신입 채용규모</th><th>필수 역량</th></tr>
+          <tr class="hl"><td class="num">1</td><td><b>AI 앱 개발자</b></td><td>LLM API + 백엔드/프론트로 기능 출시</td><td class="stars">★★☆☆☆</td><td class="lv-hi">많음</td><td>Python/JS, REST API, DB</td></tr>
+          <tr class="hl"><td class="num">2</td><td><b>AI 엔지니어</b></td><td>RAG·에이전트 파이프라인 설계</td><td class="stars">★★★☆☆</td><td class="lv-mid">중간</td><td>위 + 벡터DB, 청킹, 툴콜링</td></tr>
+          <tr><td class="num">3</td><td><b>데이터 엔지니어</b></td><td>AI용 데이터 수집·정제·파이프라인</td><td class="stars">★★★☆☆</td><td class="lv-hi">많음</td><td>SQL, ETL, 클라우드</td></tr>
+          <tr><td class="num">4</td><td><b>AI 품질/평가(Eval)</b></td><td>답변 품질 측정, 가드레일 설계</td><td class="stars">★★☆☆☆</td><td class="lv-lo">적음 (↗)</td><td>데이터 설계, 통계 기초, 꼼꼼함</td></tr>
+          <tr><td class="num">5</td><td><b>LLMOps</b></td><td>배포·모니터링·비용 관리</td><td class="stars">★★★★☆</td><td class="lv-lo">적음 (↗)</td><td>Docker, CI/CD, 관측(Observability)</td></tr>
+          <tr><td class="num">6</td><td><b>AI 서비스 기획/PM</b></td><td>어디에 AI를 붙일지 결정, 요구사항 정의</td><td class="stars">★★☆☆☆</td><td class="lv-mid">중간</td><td>도메인 지식, 문서화, AI 한계 이해</td></tr>
+          <tr><td class="num">7</td><td><b>프롬프트/AI 운영</b></td><td>프롬프트 설계, 사내 AI 활용 가이드</td><td class="stars">★☆☆☆☆</td><td class="lv-lo">적음</td><td>글쓰기, 실험 설계</td></tr>
+          <tr><td class="num">8</td><td><b>AI 어노테이션/데이터 QA</b></td><td>학습·평가 데이터 구축, 기준 문서화</td><td class="stars">★☆☆☆☆</td><td class="lv-mid">중간</td><td>기준 수립, 일관성</td></tr>
+          <tr><td class="num">9</td><td><b>AI 솔루션 엔지니어(SE)</b></td><td>고객사 PoC, 도입 컨설팅</td><td class="stars">★★★☆☆</td><td class="lv-mid">중간</td><td>기술 + 커뮤니케이션</td></tr>
+          <tr><td class="num">10</td><td><b>AI 보안/거버넌스</b></td><td>프롬프트 인젝션, 개인정보, 규제 대응</td><td class="stars">★★★★☆</td><td class="lv-lo">적음 (↗)</td><td>보안 기초, 법·규제</td></tr>
+          <tr><td class="num">11</td><td><b>AI 교육</b></td><td>사내외 교육, 데모 제작</td><td class="stars">★★☆☆☆</td><td class="lv-lo">적음</td><td>발표, 데모 개발</td></tr>
+          <tr><td class="num">12</td><td><b>ML 엔지니어/리서처</b></td><td>모델 학습·튜닝</td><td class="stars">★★★★★</td><td class="lv-lo">매우 적음</td><td>수학, 논문, PyTorch</td></tr>
+        </table>
+      </div>
+      <div class="tip"><b>(↗) 표시</b> — 현재 규모는 작지만 <b>지원자 수가 더 적어 경쟁률은 오히려 낮은</b> 틈새 직무입니다. 취준생이 놓치기 쉬운 자리입니다.</div>
+
+    
+</div>
+  </section>
+
+  <!-- ============ 세션 2 ============ -->
+  <section class="cat collapsible" id="s2" style="--cat:#E8553F">
+    <div class="cat-head" onclick="toggleSection('s2')">
+      <div class="cat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4v7a5 5 0 005 5h11"/><path d="M16 12l4 4-4 4"/>
+        </svg>
+      </div>
+      <div>
+        <span class="cat-code">SESSION // 2</span>
+        <h2 class="cat-title"> 진입 전략</h2>
+        <p class="cat-desc">"나의 목적지는 어디로 가야 하나" — 코딩 수준·도메인 경험·성향에 따라 최적 경로가 다릅니다. 네 가지 중 하나를 고르는 세션입니다.</p>
+      </div>
+      <div class="cat-toggle"><span class="arrow">▶</span><span class="label-closed">펼치기</span><span class="label-open">접기</span></div>
+    </div>
+    <div class="content">
+      <div class="diagram-card">
+        <img src="images/job_loadmap.png" alt="AI 직무 2축 지형도 — 기술 깊이 × 비즈니스 접점으로 나눈 4분면과 각 직무의 위치">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 세션 3 ============ -->
+  <section class="cat collapsible" id="s3" style="--cat:#B8722C">
+    <div class="cat-head" onclick="toggleSection('s3')">
+      <div class="cat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/><path d="M12 22V12M3 7l9 5 9-5"/>
+        </svg>
+      </div>
+      <div>
+        <span class="cat-code">SESSION // 3</span>
+        <h2 class="cat-title">공통 기초 — 어떤 직무를 가든 필요한 것</h2>
+        <p class="cat-desc">"무엇부터 시작하나요?" — 아래 3가지는 12개 직무 전부의 최소 공통분모입니다. 여기까지는 같이 가고, 그 다음부터 갈라집니다.</p>
+      </div>
+      <div class="cat-toggle"><span class="arrow">▶</span><span class="label-closed">펼치기</span><span class="label-open">접기</span></div>
+    </div>
+    <div class="content">
+      <blockquote class="quote">이 3개는 <b>모든 AI 직무의 최소 공통분모</b>입니다. 여기서 갈라집니다.</blockquote>
+
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <tr><th>순서</th><th>주제</th><th>왜 필요한가</th><th>체크포인트</th></tr>
+        <tr><td class="step">1</td><td><b>Python 기초 + REST API</b></td><td>AI 도구 대부분이 Python/HTTP</td><td><code class="mono">requests</code>로 외부 API 호출하고 JSON 파싱 가능</td></tr>
+        <tr><td class="step">2</td><td><b>LLM API 다루기</b></td><td>실무의 시작점</td><td>스트리밍, 토큰/비용 계산, 에러 재시도 구현 가능</td></tr>
+        <tr><td class="step">3</td><td><b>프롬프트 설계</b></td><td>코드보다 이게 성능을 좌우</td><td>시스템 프롬프트 / 역할 분리 / 출력 스키마 강제</td></tr>
+      </table>
+      </div>
+
+       <div class="tip"><b>AI 리터러시</b> — AI 리터러시 = AI를 잘 사용하는 능력 + AI의 결과를 제대로 판단하는 능력</div>
+</div>
+  </section>
+
+  <!-- ============ 세션 4 · 직무별 학습 로드맵 (탭형) ============ -->
+  <section class="cat" id="tabs-section" style="--cat:#7B5EA7">
+    <div class="cat-head">
+      <div class="cat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20h4v-4h4v-4h4v-4h4"/>
+        </svg>
+      </div>
+      <div>
+        <span class="cat-code">SESSION // 4</span>
+        <h2 class="cat-title">직무별 학습 로드맵</h2>
+        <p class="cat-desc">아래 탭을 눌러 5개 직무의 단계별 경로를 비교하세요.</p>
+      </div>
+    </div>
+    <div class="content">
+
+    <div class="tab-nav">
+      <button type="button" class="tab-btn active" style="--cat:#7B5EA7" data-cat="r1" onclick="showTabById('r1', this)"><span class="dot"></span>4-1 · AI 앱 개발자</button>
+      <button type="button" class="tab-btn" style="--cat:#2F8FD1" data-cat="r2" onclick="showTabById('r2', this)"><span class="dot"></span>4-2 · AI 엔지니어</button>
+      <button type="button" class="tab-btn" style="--cat:#D1477A" data-cat="r3" onclick="showTabById('r3', this)"><span class="dot"></span>4-3 · AI 품질/평가</button>
+      <button type="button" class="tab-btn" style="--cat:#3E9145" data-cat="r4" onclick="showTabById('r4', this)"><span class="dot"></span>4-4 · LLMOps</button>
+      <button type="button" class="tab-btn" style="--cat:#9C4F96" data-cat="r5" onclick="showTabById('r5', this)"><span class="dot"></span>4-5 · AI 서비스 기획/PM</button>
+    </div>
+
+    <!-- ---- 4-1 ---- -->
+    <div class="tab-panel" id="r1" style="--cat:#7B5EA7">
+      <div class="cat-head">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/>
+          </svg>
+        </div>
+        <div>
+          <span class="cat-code">ROADMAP // 4-1</span>
+          <h2 class="cat-title">AI 앱 개발자 <span class="tag" style="vertical-align:middle;">가장 추천</span></h2>
+          <p class="cat-desc">기존 웹/백엔드 역량이 그대로 쓰이는 경로입니다. 공고 요구사항의 상당 부분이 이미 배운 것과 겹칩니다.</p>
+        </div>
+      </div>
+      <div class="content">
+        <span class="section-label">단계별 로드맵</span>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>단계</th><th>학습 내용</th><th>산출물</th></tr>
+          <tr><td class="step">0</td><td>Python, HTTP/REST, Git</td><td>간단한 CRUD API</td></tr>
+          <tr><td class="step">1</td><td>LLM API (호출·스트리밍·비용·에러처리)</td><td>텍스트 요약 CLI 도구</td></tr>
+          <tr><td class="step">2</td><td>구조화 출력(JSON 스키마), Tool calling (툴 콜링)</td><td>문의 자동 분류 API</td></tr>
+          <tr><td class="step">3</td><td>백엔드 통합 (FastAPI + DB + 인증)</td><td>사용자 계정 있는 AI 웹앱</td></tr>
+          <tr><td class="step">4</td><td>배포 (Docker, 클라우드)</td><td>실제 접속 가능한 URL</td></tr>
+        </table>
+        </div>
+</div>
+    </div>
+
+    <!-- ---- 4-2 ---- -->
+    <div class="tab-panel" id="r2" style="--cat:#2F8FD1">
+      <div class="cat-head">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-5.5-5.5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="cat-code">ROADMAP // 4-2</span>
+          <h2 class="cat-title">AI 엔지니어 (RAG / 에이전트)</h2>
+          <p class="cat-desc">검색 품질을 수치로 개선할 수 있는 사람을 뽑습니다. "만들었다"가 아니라 "재고 올렸다"를 말할 수 있어야 합니다.</p>
+        </div>
+      </div>
+      <div class="content">
+        <span class="section-label">단계별 로드맵</span>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>단계</th><th>학습 내용</th><th>산출물</th></tr>
+          <tr><td class="step">0</td><td>(AI 앱 개발자 0~2단계 선행)</td><td>—</td></tr>
+          <tr><td class="step">1</td><td>임베딩, 벡터 검색 원리</td><td>문서 유사도 검색기</td></tr>
+          <tr><td class="step">2</td><td>청킹 전략, 하이브리드 검색, 리랭킹</td><td>RAG 챗봇 v1</td></tr>
+          <tr><td class="step">3</td><td>검색 품질 측정 (Recall@k, MRR)</td><td>청킹 전략별 성능 비교 리포트</td></tr>
+          <tr><td class="step">4</td><td>에이전트 — 툴 콜링, 상태 관리, 재시도</td><td>다단계 업무 에이전트</td></tr>
+        </table>
+        </div>
+
+        <div class="tip"><b>차별화 포인트</b> — 대부분의 지원자가 "RAG 챗봇 만들었습니다"에서 멈춥니다. <b>"청킹 사이즈를 512에서 256으로 줄여 Recall@5가 0.71 → 0.84로 올랐습니다"</b>라고 말할 수 있으면 그 자체가 합격 요인입니다.</div>
+</div>
+    </div>
+
+    <!-- ---- 4-3 ---- -->
+    <div class="tab-panel" id="r3" style="--cat:#D1477A">
+      <div class="cat-head">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+          </svg>
+        </div>
+        <div>
+          <span class="cat-code">ROADMAP // 4-3</span>
+          <h2 class="cat-title">AI 품질/평가 (Eval)</h2>
+          <p class="cat-desc">코딩 부담이 상대적으로 적은 틈새 영역. 관측(89%)과 평가(52.4%) 사이의 <b>약 37%p 실무 격차</b>가 이 직무가 필요해지는 이유입니다.</p>
+        </div>
+      </div>
+      <div class="content">
+        <span class="section-label">단계별 로드맵</span>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>단계</th><th>학습 내용</th><th>산출물</th></tr>
+          <tr><td class="step">1</td><td>평가셋 설계 — 무엇을 측정할 것인가</td><td>평가 기준 문서(rubric)</td></tr>
+          <tr><td class="step">2</td><td>규칙 기반 자동 평가 (정확도, 형식, 금칙어)</td><td>자동 채점 스크립트</td></tr>
+          <tr><td class="step">3</td><td>LLM-as-a-Judge, 사람 평가와의 일치도</td><td>판정 신뢰도 검증 리포트</td></tr>
+          <tr><td class="step">4</td><td>회귀 테스트, 관측 도구 (Langfuse 등)</td><td>대시보드</td></tr>
+        </table>
+        </div>
+
+        <span class="section-label">3계층 평가 구조 (실무 표준)</span>
+        <div class="grid">
+          <div class="card">
+            <div class="card-top">
+              <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+              <h3>1층 · PR마다 빠른 검사</h3>
+            </div>
+            <p>형식·툴콜링 유효성처럼 규칙으로 즉시 판정 가능한 항목.</p>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></div>
+              <h3>2층 · 야간 회귀 테스트</h3>
+            </div>
+            <p>LLM 판정으로 품질 회귀를 탐지합니다.</p>
+          </div>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+              <h3>3층 · 운영 중 상시 모니터링</h3>
+            </div>
+            <p>실사용 트래픽에서 성능 드리프트를 감지합니다.</p>
+          </div>
+        </div>
+</div>
+    </div>
+
+    <!-- ---- 4-4 ---- -->
+    <div class="tab-panel" id="r4" style="--cat:#3E9145">
+      <div class="cat-head">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7L12 12l8.7-5M12 22V12"/>
+          </svg>
+        </div>
+        <div>
+          <span class="cat-code">ROADMAP // 4-4</span>
+          <h2 class="cat-title">LLMOps</h2>
+          <p class="cat-desc">배포·관측·비용을 책임지는 자리. Linux·Docker·Git이 선행 조건이라 진입은 높지만, 지원자가 적습니다.</p>
+        </div>
+      </div>
+      <div class="content">
+        <span class="section-label">단계별 로드맵</span>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>단계</th><th>학습 내용</th><th>산출물</th></tr>
+          <tr><td class="step">0</td><td>(Linux, Docker, Git 선행 필수)</td><td>—</td></tr>
+          <tr><td class="step">1</td><td>배포 파이프라인, 환경 분리</td><td>CI/CD로 자동 배포되는 AI API</td></tr>
+          <tr><td class="step">2</td><td>관측 — 트레이싱, 로깅, OpenTelemetry</td><td>요청 단위 추적 대시보드</td></tr>
+          <tr><td class="step">3</td><td>비용 최적화 — 캐싱, 모델 라우팅, 토큰 절감</td><td>비용 40% 절감 실험 리포트</td></tr>
+          <tr><td class="step">4</td><td>안정성 — 레이트리밋, 폴백, 서킷브레이커</td><td>장애 시나리오 대응 문서</td></tr>
+        </table>
+        </div>
+
+        <div class="tip"><b>포트폴리오 관점</b> — 3단계의 "비용 X% 절감 리포트"는 면접에서 <b>숫자로 말할 수 있는</b> 몇 안 되는 산출물입니다. 우선순위를 여기에 두세요.</div>
+</div>
+    </div>
+
+    <!-- ---- 4-5 ---- -->
+    <div class="tab-panel" id="r5" style="--cat:#9C4F96">
+      <div class="cat-head">
+        <div class="cat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>
+          </svg>
+        </div>
+        <div>
+          <span class="cat-code">ROADMAP // 4-5</span>
+          <h2 class="cat-title">AI 서비스 기획 / PM</h2>
+          <p class="cat-desc">코드를 쓰지 않지만 AI의 한계를 가장 정확히 알아야 하는 자리. 도메인 경험이 곧 무기가 됩니다.</p>
+        </div>
+      </div>
+      <div class="content">
+        <span class="section-label">단계별 로드맵</span>
+        <div class="tbl-wrap">
+        <table class="tbl">
+          <tr><th>단계</th><th>학습 내용</th><th>산출물</th></tr>
+          <tr><td class="step">1</td><td>AI가 잘하는 것 / 못하는 것 구분</td><td>적용 후보 업무 10개 평가표</td></tr>
+          <tr><td class="step">2</td><td>요구사항 정의 — 성공 기준을 숫자로</td><td>PRD 1건</td></tr>
+          <tr><td class="step">3</td><td>노코드/저코드 프로토타이핑</td><td>동작하는 프로토타입</td></tr>
+          <tr><td class="step">4</td><td>비용·리스크 산정</td><td>ROI 추정 시트</td></tr>
+        </table>
+        </div>
+
+        <div class="tip"><b>핵심 역량</b> — <b>"이 업무에 AI를 쓰면 안 되는 이유"</b>를 말할 수 있는 기획자가 신뢰받습니다.</div>
+</div>
+    </div>
+
+  </div>
+  </section>
+
+  <!-- ============ 참고 출처 ============ -->
+  <hr class="section-break">
+  <section class="cat collapsible" id="src" style="--cat:#6B7280">
+    <div class="cat-head" onclick="toggleSection('src')">
+      <div class="cat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/>
+        </svg>
+      </div>
+      <div>
+        <span class="cat-code">APPENDIX</span>
+        <h2 class="cat-title">참고 출처 &amp; 신뢰도 등급</h2>
+        <p class="cat-desc">본문에 실은 수치의 출처입니다. 출처마다 성격과 신뢰도가 다르므로, 강의에서 인용할 때 아래 A/B/C 구분을 함께 언급하는 것을 권합니다.</p>
+      </div>
+      <div class="cat-toggle"><span class="arrow">▶</span><span class="label-closed">펼치기</span><span class="label-open">접기</span></div>
+    </div>
+    <div class="content">
+      <span class="grade grade-a">A급 · 설문/조사 기반</span>
+      <p class="concept">표본과 조사 기간이 공개되어 있습니다. <strong>수치를 그대로 인용해도 무방</strong>합니다.</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <tr><th>출처</th><th>성격</th><th>표본</th></tr>
+        <tr><td><a href="https://magazine.hankyung.com/job-joy/article/202512290531d" target="_blank" rel="noopener">2026년 채용트렌드 — 한경 매거진</a> (2025-12-29)</td><td>한국바른채용인증원 설문 보도</td><td>채용전문면접관 414명</td></tr>
+        <tr><td><a href="https://www.langchain.com/state-of-agent-engineering" target="_blank" rel="noopener">State of Agent Engineering — LangChain</a> (조사 2025-11~12 · 공개 2026-06-12)</td><td>공개 설문 리포트. 단, LangSmith(관측·평가 상품) 판매사가 직접 수행한 설문임</td><td>1,340명 (2025-11-18 ~ 12-02)</td></tr>
+      </table>
+      </div>
+      <div class="tip">
+        <b>한경</b> — 조직적합성(인성·협력·책임감) 검증 67%(3년 연속 1위), <b>AI 확대에 따른 인력 축소 및 질적 채용 전환</b> 63%, AI 리터러시 검증 46%, AI로 포장된 지원자의 진정성·표절 검증 41%<br>
+        <b>LangChain</b> — 관측 89% vs 오프라인 평가 52.4%(온라인 평가 37.3%) → 약 37%p 격차. 본문 "전략 C"의 근거.<br>
+        <span style="color:var(--slate)">두 수치 모두 <b>설문 응답 기업의 도입률</b>이며, 채용 공고 수·구인 규모와는 다른 지표입니다.</span>
+      </div>
+
+      <span class="grade grade-b">B급 · 업계 분석</span>
+      <p class="concept">편집 검수를 거친 기술 분석입니다. <strong>맥락 참고용</strong>으로 사용하세요.</p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <tr><th>출처</th><th>성격</th></tr>
+        <tr><td><a href="https://www.oreilly.com/radar/the-ai-agents-stack-2026-edition/" target="_blank" rel="noopener">The AI Agents Stack (2026 Edition) — O'Reilly Radar</a> (2026-06-08, Paolo Perrone)</td><td>본문 <b>평가 3계층 구조</b>(PR 단위 빠른 검사 / 야간 LLM 판정 회귀 / 운영 중 상시 모니터링)의 출처</td></tr>
+        <tr><td><a href="https://machinelearningmastery.com/the-roadmap-for-mastering-llmops-in-2026/" target="_blank" rel="noopener">The Roadmap for Mastering LLMOps in 2026 — MachineLearningMastery</a> (2026-06-01)</td><td>LLMOps 학습 순서 참고</td></tr>
+      </table>
+      </div>
+
+      <span class="grade grade-c">C급 · 자사 데이터 기반 벤더 블로그</span>
+      <p class="concept">자기 상품을 파는 회사가 자사 데이터로 낸 수치입니다. <strong>단정적으로 인용하지 마세요.</strong></p>
+      <div class="tbl-wrap">
+      <table class="tbl">
+        <tr><th>출처</th><th>주의점</th></tr>
+        <tr><td><a href="https://www.finalroundai.com/blog/software-engineering-job-market-2026" target="_blank" rel="noopener">Software Engineering Job Market 2026 — FinalRound AI</a> (2026-07-14)</td><td><b>면접 준비 상품 판매사</b>의 블로그. "AI 직무 1명당 3.4개 공고", "63% 인재 부족"의 출처지만 원자료 검증이 어려움</td></tr>
+        <tr><td><a href="https://www.interviewstack.io/blog/ai-engineer-vs-machine-learning-engineer-2026" target="_blank" rel="noopener">AI Engineer vs ML Engineer 2026 — InterviewStack</a> (2026-05-14)</td><td><b>자사 잡보드 데이터</b>(AI 엔지니어 4,091건 / ML 엔지니어 4,781건, 2026년 5월). 시장 전수조사가 아님. "신입 공고 5.8% vs 4.8%"의 출처</td></tr>
+        <tr><td><a href="https://blog.searchright.net/2026-hiring-market-outlook/" target="_blank" rel="noopener">2026 하반기 채용 트렌드 — Searchright</a> (2026-04-03)</td><td><b>AI 채용 솔루션 판매사</b>의 블로그. 스킬 기반 채용 흐름 참고용</td></tr>
+      </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ 하루 마무리 ============ -->
+<div class="panel">
+  <h2>하루 마무리 체크리스트</h2>
+  <p>오늘 다룬 내용을 스스로 점검해보세요. 체크가 안 되는 항목은 해당 세션으로 돌아가 다시 확인하시길 권합니다.</p>
+  <div class="discuss">
+    <h3>Checklist</h3>
+    <ul>
+      <li>☐ "모델을 만드는 쪽"과 "모델을 쓰는 쪽"의 차이를 예시와 함께 설명할 수 있다</li>
+      <li>☐ AI 직무 중 내가 목표로 삼을 직무 1개를 이유와 함께 말할 수 있다</li>
+       <li>☐ 4가지 진입 전략 중 하나를 고르고, 나머지를 고르지 않은 이유를 말할 수 있다</li>
+      <li>☐ 공통 기초 3가지(Python+REST / LLM API / 프롬프트 설계)를 스스로 채점하고, 가장 약한 항목을 알고 있다</li>
+    </ul>
+  </div>
+</div>
+
+<footer class="note">
+  본 자료의 서비스명·상표는 각 소유 기업에 귀속됩니다 · <b>출처 확인 기준일: 2026-08-09</b> · 채용 시장 수치는 빠르게 변동되므로 수업 전 각 출처를 다시 확인하시기 바랍니다
+</footer>
+
+<script>
+  // 세션 1~3: 제목 클릭 시 내용 접기/펼치기
+  function toggleSection(id){
+    var sec = document.getElementById(id);
+    if(sec) sec.classList.toggle('open');
+  }
+  function openSection(id){
+    var sec = document.getElementById(id);
+    if(sec && sec.classList.contains('collapsible')) sec.classList.add('open');
+  }
+  // 상단 네비게이션 칩(#s1~#s3)을 누르면 해당 세션을 자동으로 펼침
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('.toc a.chip[href^="#"]').forEach(function(a){
+      a.addEventListener('click', function(){ openSection(a.getAttribute('href').slice(1)); });
+    });
+    if(location.hash) openSection(location.hash.slice(1));
+  });
+
+  // 직무별 로드맵: 탭 전환
+  function showTabById(id, btn){
+    document.querySelectorAll('.tab-panel').forEach(function(p){ p.classList.remove('active'); });
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    var panel = document.getElementById(id);
+    if(panel) panel.classList.add('active');
+    var targetBtn = btn || document.querySelector('.tab-btn[data-cat="' + id + '"]');
+    if(targetBtn) targetBtn.classList.add('active');
+  }
+
+  // 상단 요약 네비게이션 칩에서 로드맵 클릭 시: 탭 전환 + 탭 영역으로 스크롤
+  function goToTab(id){
+    showTabById(id);
+    var target = document.getElementById('tabs-section');
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171F;
+    --paper:#F7F7F4;
+    --paper-2:#EFEFEA;
+    --line:#E1E1DB;
+    --slate:#565B66;
+    --slate-2:#8B90A0;
+    --accent:#FF7A29;
+    --accent-ink:#7A3A11;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    /* 한글이 단어(어절) 중간에서 끊기지 않도록 — 공백 단위로만 줄바꿈 */
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+  /* 긴 URL·영문 코드처럼 어절이 통째로 넘칠 때만 예외적으로 끊김 허용 */
+  code, .mono, a[href^="http"]{overflow-wrap:anywhere;}
+  /* flex/grid 자식이 콘텐츠 최소너비 때문에 넘쳐 잘리는 것 방지 */
+  .card, .grid > *, .quad-cell, .cat-head > div{min-width:0;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:72px 24px 56px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-120px; top:-120px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(255,122,41,0.25) 0%, rgba(255,122,41,0) 70%);
+  }
+  .hero-inner{max-width:992px; margin:0 auto; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:16.5px; letter-spacing:.1em;
+    color:var(--accent); text-transform:uppercase;
+    border:1px solid rgba(255,122,41,0.4);
+    padding:6px 12px; border-radius:100px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"●"; font-size:8px;}
+  h1{
+    font-size:clamp(30px,4.4vw,46px);
+    line-height:1.25;
+    margin:0 0 18px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  h1 span{color:var(--accent);}
+  .hero p.lead{
+    font-size:19.5px;
+    color:#C7C9D4;
+    margin:0 0 14px;
+  }
+  .hero p.lead b{color:#fff; font-weight:600;}
+  .hero ul.lead-list{
+    margin:0 0 28px; padding-left:20px;
+    color:#C7C9D4; font-size:18px;
+  }
+  .hero ul.lead-list li{margin-bottom:6px;}
+  .hero-meta{
+    display:flex; flex-wrap:wrap; gap:10px 28px;
+    font-size:16.5px; color:#9EA2B3;
+    border-top:1px solid rgba(255,255,255,0.12);
+    padding-top:20px;
+  }
+  .hero-meta b{color:#E7E8EF; font-weight:600;}
+
+  /* ---------- NAV CHIPS ---------- */
+  .toc{
+    max-width:1040px; margin:-28px auto 0; padding:0 24px 8px;
+    position:relative; z-index:2;
+  }
+  .toc-card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    display:flex; flex-wrap:wrap; gap:10px;
+    box-shadow:0 20px 40px -24px rgba(20,23,31,0.25);
+  }
+  .chip{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:15px; font-weight:500;
+    padding:7px 13px 7px 10px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    color:var(--ink);
+    text-decoration:none;
+    background:#fff;
+    transition:transform .12s ease, border-color .12s ease;
+    cursor:pointer; font-family:inherit;
+  }
+  .chip:hover{border-color:var(--cat,var(--accent)); transform:translateY(-1px);}
+  .chip .dot{width:8px; height:8px; border-radius:50%; background:var(--cat,var(--accent));}
+  .chip.active{background:var(--cat,var(--accent)); border-color:var(--cat,var(--accent)); color:#fff;}
+  .chip.active .dot{background:#fff;}
+  .toc-divider{
+    width:1px; align-self:stretch; background:var(--line); margin:2px 2px;
+  }
+  /* 세션 / 로드맵 칩을 각각 다른 줄에 배치 */
+  .toc-card{flex-direction:column; align-items:stretch; gap:0;}
+  .toc-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .toc-row + .toc-row{
+    margin-top:14px; padding-top:14px;
+    border-top:1px solid var(--line);
+  }
+
+  /* ---------- SECTIONS (공통) ---------- */
+  main{max-width:1040px; margin:0 auto; padding:56px 24px 0;}
+  section.cat{margin-bottom:36px; scroll-margin-top:24px; border-bottom:1px solid var(--line); padding-bottom:28px;}
+  .cat-head{
+    display:flex; align-items:flex-start; gap:16px;
+    padding-bottom:24px; margin-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  /* 첫 번째 열을 한 줄로 유지 */
+  table.tbl.nowrap-first th:first-child,
+  table.tbl.nowrap-first td:first-child{white-space:nowrap; width:1%;}
+
+  /* 큰 블록 사이 구분선 + 여백 */
+  .section-break{
+    border:0; border-top:2px solid var(--line);
+    margin:64px 0 56px;
+  }
+
+  /* ---------- 접기/펼치기 섹션 ---------- */
+  section.cat.collapsible > .cat-head{
+    cursor:pointer;
+    padding-bottom:20px; margin-bottom:0;
+    border-bottom:0;
+    transition:opacity .12s ease;
+  }
+  section.cat.collapsible > .cat-head:hover{opacity:.78;}
+  section.cat.collapsible.open > .cat-head{
+    padding-bottom:24px; margin-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  section.cat.collapsible{padding-bottom:20px;}
+  section.cat.collapsible.open{padding-bottom:28px;}
+  .cat-toggle{
+    flex:0 0 auto; margin-left:auto; align-self:center;
+    display:flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--cat); font-weight:600;
+    white-space:nowrap;
+  }
+  .cat-toggle .arrow{
+    display:inline-block; font-size:11px;
+    transition:transform .18s ease;
+  }
+  section.cat.collapsible.open .cat-toggle .arrow{transform:rotate(90deg);}
+  .cat-toggle .label-open{display:none;}
+  section.cat.collapsible.open .cat-toggle .label-open{display:inline;}
+  section.cat.collapsible.open .cat-toggle .label-closed{display:none;}
+  section.cat.collapsible > .content{display:none;}
+  section.cat.collapsible.open > .content{display:block; animation:panelFadeIn .25s ease;}
+  @media (max-width:560px){ .cat-toggle span:not(.arrow){display:none;} }
+
+  .cat-icon{
+    flex:0 0 auto;
+    width:46px; height:46px;
+    border-radius:12px;
+    background:color-mix(in srgb, var(--cat) 12%, white);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cat);
+  }
+  .cat-icon svg{width:24px; height:24px;}
+  /* .content의 폭을 .cat-desc 텍스트 칸(아이콘 46px + gap 16px만큼 들여쓴 폭)에 맞춤 */
+  .content{margin-left:62px;}
+  .cat-code{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:16.5px; letter-spacing:.08em;
+    color:var(--cat); font-weight:600;
+    margin-bottom:4px; display:block;
+  }
+  .cat-title{font-size:21px; font-weight:700; margin:0 0 6px;}
+  .cat-desc{font-size:17.5px; color:var(--slate); margin:0;}
+
+  /* ---------- 세션 내부 콘텐츠 ---------- */
+  .section-label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:17.5px; letter-spacing:.06em;
+    color:var(--cat); text-transform:uppercase;
+    font-weight:600;
+    margin:24px 0 10px;
+  }
+  .section-label:first-child{margin-top:0;}
+  .concept{font-size:17.5px; color:var(--ink); margin:0 0 8px;}
+  .concept strong{color:var(--cat);}
+
+  blockquote.quote{
+    margin:0 0 18px;
+    padding:12px 18px;
+    border-left:3px solid var(--cat);
+    background:var(--paper-2);
+    border-radius:0 8px 8px 0;
+    font-size:17.5px;
+    color:var(--ink);
+  }
+  blockquote.quote b{color:var(--cat);}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(min(268px,100%),1fr));
+    gap:16px;
+    margin-bottom:8px;
+  }
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(min(420px,100%),1fr));}
+  .card{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    padding:20px;
+    display:flex; flex-direction:column; gap:12px;
+    position:relative;
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .card:hover{box-shadow:0 16px 32px -20px rgba(20,23,31,0.28); transform:translateY(-2px);}
+  .card-top{display:flex; align-items:center; gap:10px;}
+  .card-icon{
+    width:34px; height:34px; border-radius:9px;
+    background:color-mix(in srgb, var(--cat) 14%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .card-icon svg{width:18px; height:18px;}
+  .card h3{margin:0; font-size:16px; font-weight:600;}
+  .card p{margin:0; font-size:16.6px; color:var(--slate); flex:1;}
+  .card p b{color:var(--ink); font-weight:600;}
+  .card dl{margin:0; font-size:16.4px; color:var(--slate);}
+  .card dt{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:15.5px; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--cat); font-weight:600; margin-top:10px;
+  }
+  .card dt:first-child{margin-top:0;}
+  .card dd{margin:2px 0 0;}
+  .tag{
+    display:inline-block;
+    font-size:15px; font-weight:600;
+    padding:3px 11px;
+    border-radius:100px;
+    background:var(--paper-2);
+    color:var(--cat);
+    width:fit-content;
+  }
+  .tip{
+    font-size:15.6px;
+    background:var(--paper-2);
+    border-left:3px solid var(--cat);
+    padding:10px 12px;
+    border-radius:6px;
+    color:var(--ink);
+    margin:4px 0 20px;
+  }
+  .tip b{color:var(--cat);}
+
+  table.tbl{
+    width:100%;
+    border-collapse:collapse;
+    margin:0 0 22px;
+    font-size:16.5px;
+  }
+  table.tbl th, table.tbl td{
+    border:1px solid var(--line);
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  table.tbl th{
+    background:var(--paper-2);
+    color:var(--ink);
+    font-weight:600;
+  }
+  table.tbl td.num{
+    font-family:"IBM Plex Mono",monospace;
+    color:var(--slate-2);
+    text-align:center; width:38px;
+  }
+  table.tbl .stars{
+    font-family:"IBM Plex Mono",monospace;
+    letter-spacing:.06em; white-space:nowrap;
+    color:var(--cat);
+  }
+  table.tbl .lv-hi{color:#C0392B; font-weight:600;}
+  table.tbl .lv-mid{color:#B8722C; font-weight:600;}
+  table.tbl .lv-lo{color:var(--slate-2);}
+  table.tbl tr.hl td{background:color-mix(in srgb, var(--cat) 7%, white);}
+  table.tbl a{color:var(--cat); text-decoration:none; border-bottom:1px solid color-mix(in srgb, var(--cat) 40%, white);}
+  table.tbl a:hover{border-bottom-color:var(--cat);}
+  .tbl-wrap{overflow-x:auto; margin-bottom:22px;}
+  .tbl-wrap > table.tbl{margin-bottom:0;}
+  /* 넓은 표(6칸 직무 비교표)만 최소 너비를 유지하고, 나머지는 화면에 맞춤 */
+  .tbl-wrap.wide > table.tbl{min-width:720px;}
+  @media (max-width:640px){
+    table.tbl{font-size:15px;}
+    table.tbl th, table.tbl td{padding:8px 9px;}
+  }
+
+  /* ---------- 2축 지형도 ---------- */
+  .quad-frame{
+    display:grid;
+    grid-template-columns:58px minmax(0,1fr);
+    grid-template-rows:minmax(0,1fr) 42px;
+    gap:10px;
+    margin:0 0 26px;
+  }
+  .quad-y, .quad-x{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:15px; letter-spacing:.02em;
+    color:var(--slate);
+    background:var(--paper-2);
+    border-radius:10px;
+    text-align:center;
+  }
+  .quad-y{
+    grid-column:1; grid-row:1;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:space-between;
+    padding:14px 0; line-height:1.35;
+  }
+  .quad-y .yline{
+    flex:1; width:1px; margin:8px 0;
+    background:linear-gradient(to bottom, var(--line), var(--slate-2), var(--line));
+  }
+  .quad-x{
+    grid-column:2; grid-row:2;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .quad-y b, .quad-x b{color:var(--ink); font-weight:600;}
+  .quad-y em, .quad-x em{font-style:normal; color:var(--slate-2);}
+
+  .quad{
+    grid-column:2; grid-row:1;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    /* overflow:hidden 을 쓰면 셀 밖으로 나온 화살표 배지와 긴 문장이 잘립니다.
+       대신 각 셀에 모서리 라운드를 직접 주어 프레임 모양을 유지합니다. */
+    overflow:visible;
+  }
+  .quad-cell{
+    background:#fff;
+    padding:20px 22px 18px;
+    min-height:186px;
+    display:flex; flex-direction:column; gap:12px;
+    position:relative;
+  }
+  .quad-cell:nth-child(1){border-radius:calc(var(--radius) - 1px) 0 0 0;}
+  .quad-cell:nth-child(2){border-radius:0 calc(var(--radius) - 1px) 0 0;}
+  .quad-cell:nth-child(3){border-radius:0 0 0 calc(var(--radius) - 1px);}
+  .quad-cell:nth-child(4){border-radius:0 0 calc(var(--radius) - 1px) 0;}
+  .quad-cell .qpos{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14.5px; letter-spacing:.03em;
+    color:var(--slate-2); font-weight:600;
+    /* 우측 상단 배지(.qbadge)와 글자가 겹치지 않도록 충분히 확보 */
+    padding-right:96px;
+  }
+  .quad-cell .qpos em{font-style:normal; color:var(--slate);}
+  .qroles{display:flex; flex-wrap:wrap; gap:7px; margin:0;}
+  .qrole{
+    font-size:16px; font-weight:500;
+    padding:5px 13px; border-radius:100px;
+    background:var(--paper-2); color:var(--ink);
+    border:1px solid var(--line);
+    /* nowrap 이면 좁은 화면에서 "AI 솔루션 엔지니어" 같은 긴 칩이 칸 밖으로 잘립니다 */
+    white-space:normal;
+    max-width:100%;
+  }
+  .quad-cell .qnote{font-size:15.8px; color:var(--slate); margin:auto 0 0; line-height:1.5;}
+  .quad-cell .qnote b{color:var(--ink);}
+  .qbadge{
+    position:absolute; top:18px; right:20px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13.5px; font-weight:500; letter-spacing:.04em;
+    color:var(--slate-2); background:transparent;
+    border:1px solid var(--line);
+    padding:3px 11px; border-radius:100px;
+  }
+  .quad-cell.spot{background:color-mix(in srgb, var(--cat) 7%, white);}
+  .quad-cell.spot .qpos{color:var(--cat);}
+  .quad-cell.spot .qpos em{color:var(--cat);}
+  .quad-cell.spot .qrole{
+    background:#fff; color:var(--cat); font-weight:600;
+    border-color:color-mix(in srgb, var(--cat) 35%, white);
+  }
+  .quad-cell.spot .qnote b{color:var(--cat);}
+  .quad-cell.spot .qbadge{
+    background:var(--cat); border-color:var(--cat);
+    color:#fff; font-weight:600;
+  }
+
+  /* 출발점 사분면 — 목적지보다 한 단계 약한 강조 */
+  .quad-cell.start{background:color-mix(in srgb, var(--cat) 3%, white);}
+  .quad-cell.start .qpos{color:var(--slate);}
+  .quad-cell.start .qbadge{
+    background:color-mix(in srgb, var(--cat) 12%, white);
+    border-color:color-mix(in srgb, var(--cat) 28%, white);
+    color:var(--cat); font-weight:600;
+  }
+  .quad-cell.start .qrole{
+    background:#fff;
+    border-color:color-mix(in srgb, var(--cat) 24%, white);
+    color:var(--ink); font-weight:600;
+  }
+  .quad-cell.start .qnote b{color:var(--cat);}
+
+  /* 출발점 → 목적지 이동을 나타내는 화살표 */
+  .quad-cell.start::before{
+    content:"↑";
+    position:absolute; top:-15px; right:52px;
+    width:28px; height:28px; border-radius:50%;
+    background:var(--cat); color:#fff;
+    font-size:17px; font-weight:700; line-height:28px; text-align:center;
+    box-shadow:0 0 0 4px var(--paper);
+    z-index:2;
+  }
+  .qpath{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14.5px; color:var(--cat); font-weight:600;
+    letter-spacing:.02em;
+  }
+
+  /* ---------- 다이어그램 이미지 카드 ---------- */
+  .diagram-card{
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:#fff;
+    padding:20px;
+    text-align:center;
+    margin-bottom:8px;
+  }
+  .diagram-card img{
+    max-width:100%; height:auto;
+    border-radius:8px;
+    display:block; margin:0 auto;
+  }
+  .diagram-caption{
+    font-size:15.6px; color:var(--slate);
+    margin:12px 0 0;
+  }
+
+  .practice{
+    background:var(--paper-2);
+    border-left:3px solid var(--cat);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-top:4px;
+  }
+  .practice-title{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:16px; letter-spacing:.06em;
+    color:var(--cat); text-transform:uppercase;
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  .practice ol{margin:0; padding-left:20px; font-size:17px; color:var(--ink);}
+  .practice li{margin-bottom:10px;}
+
+  /* ---------- 탭 영역 ---------- */
+  .tab-nav{
+    display:flex; flex-wrap:wrap; gap:8px;
+    border-bottom:2px solid var(--line);
+    padding-bottom:14px;
+    margin-bottom:28px;
+  }
+  .tab-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:17px; font-weight:600;
+    padding:10px 18px 10px 15px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    color:var(--ink);
+    background:#fff;
+    cursor:pointer; font-family:inherit;
+    transition:transform .12s ease, border-color .12s ease;
+  }
+  .tab-btn .dot{width:10px; height:10px; border-radius:50%; background:var(--cat,var(--accent));}
+  .tab-btn:hover{border-color:var(--cat,var(--accent)); transform:translateY(-1px);}
+  .tab-btn.active{background:var(--cat,var(--accent)); border-color:var(--cat,var(--accent)); color:#fff;}
+  .tab-btn.active .dot{background:#fff;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block; animation:panelFadeIn .25s ease;}
+  @keyframes panelFadeIn{from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);}}
+  .tab-panel .cat-head{border-bottom:1px solid var(--line);}
+
+  /* 로드맵 단계 표 */
+  table.tbl td.step{
+    font-family:"IBM Plex Mono",monospace;
+    font-weight:600; color:var(--cat);
+    text-align:center; width:60px;
+    background:color-mix(in srgb, var(--cat) 7%, white);
+  }
+
+  /* ---------- 출처 등급 ---------- */
+  .grade{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:15.5px; font-weight:600; letter-spacing:.05em;
+    padding:5px 13px; border-radius:100px;
+    margin-bottom:8px;
+  }
+  .grade-a{background:#E4F1EC; color:#1B6B52;}
+  .grade-b{background:#E8EDF7; color:#33518F;}
+  .grade-c{background:#F8E9E4; color:#A24328;}
+
+  /* ---------- FOOTER / CLASS USE ---------- */
+  .panel{
+    background:var(--ink); color:var(--paper);
+    border-radius:20px;
+    padding:36px 32px;
+    max-width:1040px;
+    margin:16px auto 64px;
+  }
+  .panel h2{margin:0 0 10px; font-size:20px;}
+  .panel p{color:#C7C9D4; font-size:17.5px;}
+  .discuss{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:14px;
+    padding:20px 22px;
+  }
+  .discuss h3{
+    margin:0 0 12px; font-size:16.5px;
+    color:var(--accent);
+    font-family:"IBM Plex Mono",monospace;
+    letter-spacing:.05em; text-transform:uppercase;
+  }
+  .discuss ul{margin:0; padding-left:18px; font-size:17.5px; color:#E7E8EF;}
+  .discuss li{margin-bottom:8px;}
+
+  footer.note{
+    max-width:1040px; margin:0 auto;
+    text-align:center; color:var(--slate-2);
+    font-size:15.5px; padding:0 24px 48px;
+  }
+
+  @media (max-width:720px){
+    .quad-frame{grid-template-columns:minmax(0,1fr); grid-template-rows:auto auto;}
+    .quad-y{display:none;}
+    .quad{grid-column:1; grid-row:1; grid-template-columns:minmax(0,1fr);}
+    .quad-x{grid-column:1; grid-row:2; font-size:13.5px;}
+    /* 1열로 쌓이면 모서리 라운드를 첫/마지막 칸에만 적용 */
+    .quad-cell{min-height:0; border-radius:0;}
+    .quad-cell:first-child{border-radius:calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;}
+    .quad-cell:last-child{border-radius:0 0 calc(var(--radius) - 1px) calc(var(--radius) - 1px);}
+    .quad-cell .qpos{padding-right:0;}
+    .qbadge{position:static; align-self:flex-start; margin-bottom:-4px;}
+  }
+  @media (max-width:560px){
+    .hero{padding:56px 18px 44px;}
+    main{padding:44px 16px 0;}
+    .panel{padding:28px 20px;}
+  }
+
+  /* ===== [물류판 추가] 보강 블록 스타일 ===== */
+  .addon{
+    border:1px dashed var(--cat,#FF7A29);
+    border-radius:12px;
+    padding:18px 20px 8px;
+    margin:24px 0 28px;
+    background:#FFFDF7;
+  }
+  .addon-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px; letter-spacing:.08em; font-weight:600;
+    color:#fff; background:var(--cat,#FF7A29);
+    padding:4px 11px; border-radius:100px; margin-bottom:12px;
+  }
+  .addon h4{margin:16px 0 8px; font-size:17px; font-weight:700;}
+  .addon h4:first-of-type{margin-top:4px;}
+  .addon .practice{background:#fff;}
+  .addon .tip{background:#fff;}
+</style>
+</body>
+</html>

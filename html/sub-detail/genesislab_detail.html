@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>제네시스랩 AI&nbsp;역량평가 시스템 | AI&nbsp;활용 서비스 카탈로그</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171F;
+    --paper:#F7F7F4;
+    --paper-2:#EFEFEA;
+    --line:#E1E1DB;
+    --slate:#565B66;
+    --slate-2:#8B90A0;
+    --cat:#7B5EA7;      /* 채용·HR 카테고리 색상과 동일 계열 */
+    --cat-ink:#4A2F6B;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    /* 한국어 줄바꿈: 어절(단어) 중간에서 끊기지 않게 */
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+  /* 코드·URL 등 긴 영문 문자열은 예외적으로 어디서든 끊기 허용 */
+  code, pre, .mono, a[href^="http"]{overflow-wrap:anywhere;}
+  /* flex/grid 자식이 콘텐츠 최소너비 때문에 넘쳐 잘리는 것 방지 */
+  .flow-step, .tcard, .poster, .grid2 > *, .mockup-cards > *{min-width:0;}
+
+  /* ── [문장 잘림 방지] 공통 규칙 ─────────────────────────────────────
+     grid/flex 자식은 기본값(min-width:auto)이라 "가장 긴 어절" 아래로는
+     줄어들지 않습니다. 그래서 칸 밖으로 밀려나고, 부모의 overflow:hidden
+     때문에 문장 끝이 잘립니다. 아래 규칙으로 모든 자식이 줄어들 수 있게
+     만들어 잘리는 대신 줄바꿈되도록 합니다. */
+  .flow > *, .stat-cards > *, .mockup-cards > *, .grid2 > *,
+  .grid > *, .hero-top > *, .simple-flow > *, .toc-card > *{min-width:0;}
+  .flow, .stat-cards, .mockup-cards, .grid2, .grid{min-width:0;}
+  .candidate-cards > *, .candidate-cards{min-width:0;}
+
+  /* 좌우 양끝 정렬(space-between) 칩 — 왼쪽 라벨이 길어도
+     오른쪽 값이 칸 밖으로 밀려나지 않게 합니다. */
+  .receipt-chip, .cat-chip, .act-chip, .style-chip,
+  .report-row-top, .cat-bar-top, .score-row-top, .comp-bar-top{gap:10px;}
+  .receipt-chip > *, .cat-chip > *, .act-chip > *, .style-chip > *,
+  .report-row-top > *, .cat-bar-top > *, .score-row-top > *,
+  .comp-bar-top > *{min-width:0;}
+
+  /* 고정 폭 스테이지가 좁은 화면에서 화면 밖으로 나가지 않도록 */
+  .simple-stage, .source-stage, .signal-stage, .score-stage,
+  .simple-user, .simple-match, .chip-row{max-width:100%;}
+  .mockup-row-title{flex-wrap:wrap;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+
+  /* ---------- BACK BAR ---------- */
+  .backbar{
+    max-width:1040px; margin:0 auto; padding:20px 24px 0;
+  }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:15.5px; font-weight:500;
+    color:var(--slate); text-decoration:none;
+    font-family:"IBM Plex Mono",monospace;
+  }
+  .back-link:hover{color:var(--cat);}
+  .back-link svg{width:14px; height:14px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:52px 24px 48px;
+    position:relative;
+    overflow:hidden;
+    margin-top:18px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-100px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(123,94,167,0.32) 0%, rgba(123,94,167,0) 70%);
+  }
+  .hero-inner{max-width:1040px; margin:0 auto; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14.5px; letter-spacing:.12em;
+    color:var(--cat); text-transform:uppercase;
+    border:1px solid rgba(123,94,167,0.5);
+    padding:6px 12px; border-radius:100px;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{content:"●"; font-size:8px;}
+  .hero-top{display:flex; align-items:center; gap:16px; margin-bottom:18px;}
+  .brand-mark{
+    width:54px; height:54px; border-radius:14px;
+    background:color-mix(in srgb, var(--cat) 22%, var(--ink));
+    border:1px solid rgba(123,94,167,0.45);
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .brand-mark svg{width:28px; height:28px; color:var(--cat);}
+  h1{
+    font-size:clamp(24px,4vw,36px);
+    line-height:1.25;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  h1 span{color:var(--cat); font-weight:400; font-size:0.55em; display:block; margin-top:4px; font-family:"IBM Plex Mono",monospace; letter-spacing:.02em;}
+  .hero p.lead{
+    font-size:19px;
+    color:#C7C9D4;
+    max-width:none; /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+    margin:0 0 24px;
+  }
+  .hero-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px; letter-spacing:.03em;
+    padding:6px 11px; border-radius:100px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+    color:#DEDFE7;
+  }
+
+  main{max-width:1040px; margin:0 auto; padding:52px 24px 0;}
+
+  .section-head{margin-bottom:22px;}
+  .section-code{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px; letter-spacing:.1em;
+    color:var(--cat); font-weight:600;
+    margin-bottom:6px; display:block;
+  }
+  .section-title{font-size:23px; font-weight:700; margin:0 0 8px;}
+  .section-desc{font-size:17.5px; color:var(--slate); max-width:none; margin:0;} /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+
+  section{margin-bottom:56px;}
+
+  /* ---------- STEP FLOW ---------- */
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:0;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .flow-step{
+    padding:22px 18px;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .flow-step:last-child{border-right:none;}
+  .flow-num{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px; color:var(--cat); font-weight:600;
+    letter-spacing:.08em;
+    margin-bottom:10px; display:block;
+  }
+  .flow-icon{
+    width:36px; height:36px; border-radius:9px;
+    background:color-mix(in srgb, var(--cat) 12%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:12px;
+  }
+  .flow-icon svg{width:19px; height:19px;}
+  .flow-step h4{margin:0 0 6px; font-size:14.5px; font-weight:600;}
+  .flow-step p{margin:0; font-size:15.8px; color:var(--slate);}
+  .flow-arrow{
+    position:absolute; right:-9px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; border-radius:50%;
+    background:var(--paper); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+  }
+  .flow-arrow svg{width:9px; height:9px; color:var(--slate-2);}
+
+  /* 4칸이 좁아지면 문장이 뭉개지므로 2칸 → 1칸으로 단계적으로 접습니다 */
+  @media (max-width:980px){
+    .flow{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .flow-step:nth-child(2n){border-right:none;}
+    .flow-step:nth-child(-n+2){border-bottom:1px solid var(--line);}
+    .flow-step:nth-child(2n) .flow-arrow{display:none;}
+  }
+
+  @media (max-width:760px){
+    .flow{grid-template-columns:minmax(0,1fr);}
+    .flow-step{border-right:none; border-bottom:1px solid var(--line);}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-arrow{display:none;}
+  }
+
+  /* ---------- DIAGRAM CARD ---------- */
+  .diagram-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; text-align:center;
+  }
+  .diagram-caption{
+    margin-top:16px; font-size:16px; color:var(--slate);
+    max-width:none; /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+  }
+
+  /* ---------- SIMPLE EXPLAINER ---------- */
+  .simple-flow{
+    display:flex; align-items:center; justify-content:center;
+    gap:18px; flex-wrap:wrap;
+  }
+  .source-stage{
+    display:flex; flex-direction:column; align-items:center;
+    width:170px;
+  }
+  .video-icon{
+    width:64px; height:64px; border-radius:14px;
+    background:color-mix(in srgb, var(--cat) 12%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:10px;
+  }
+  .video-icon svg{width:30px; height:30px;}
+  .source-label{font-size:15px; font-weight:600; color:var(--ink); text-align:center;}
+  .source-sub{font-size:13.5px; color:var(--slate-2); text-align:center;}
+
+  .simple-connector{color:var(--slate-2); flex:0 0 auto;}
+  .simple-connector svg{width:22px; height:22px;}
+
+  .signal-stage{
+    display:flex; flex-direction:column; gap:8px;
+    width:190px;
+  }
+  .signal-chip{
+    display:flex; align-items:center; gap:9px;
+    font-size:14.5px; font-weight:600;
+    padding:10px 12px; border-radius:8px;
+    color:#fff;
+  }
+  .signal-chip svg{width:15px; height:15px; flex:0 0 auto;}
+
+  .score-stage{
+    width:220px; border:1px solid var(--line); border-radius:10px;
+    padding:14px; background:#fff; text-align:left;
+  }
+  .score-row{margin-bottom:9px;}
+  .score-row:last-child{margin-bottom:0;}
+  .score-row-top{display:flex; justify-content:space-between; font-size:13.5px; margin-bottom:5px;}
+  .score-row-top .qname{font-weight:600; color:var(--ink);}
+  .score-row-top .qval{font-family:"IBM Plex Mono",monospace; color:var(--slate);}
+  .score-bar-bg{width:100%; height:7px; border-radius:100px; background:var(--paper-2); overflow:hidden;}
+  .score-bar-fill{height:100%; border-radius:100px; background:var(--cat);}
+
+  @media (max-width:820px){
+    .simple-connector{transform:rotate(90deg);}
+  }
+
+  /* ---------- MOCKUP ---------- */
+  .mockup-frame{
+    background:#0B0D12;
+    border-radius:16px;
+    padding:0;
+    overflow:hidden;
+    border:1px solid #23262F;
+  }
+  .mockup-topbar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 18px;
+    border-bottom:1px solid #23262F;
+  }
+  .mockup-topbar .dot{width:9px; height:9px; border-radius:50%; background:#3A3E4A;}
+  .mockup-topbar .url{
+    font-family:"IBM Plex Mono",monospace; font-size:13.5px; color:#6B7080;
+    margin-left:10px;
+  }
+  .mockup-body{padding:26px 24px 30px;}
+  .mockup-greeting{
+    color:#F1F1F0; font-size:17px; font-weight:600; margin:0 0 3px;
+  }
+  .mockup-sub{color:#8B90A0; font-size:14px; margin:0 0 22px; font-family:"IBM Plex Mono",monospace;}
+
+  .candidate-cards{
+    display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px;
+    margin-bottom:24px;
+  }
+  .candidate-card{
+    background:#15171F; border:1px solid #23262F; border-radius:10px;
+    padding:14px;
+  }
+  .candidate-card .cname{color:#F1F1F0; font-size:15px; font-weight:600; margin-bottom:8px;}
+  .candidate-card .cscore{color:var(--cat); font-size:24px; font-weight:700; font-family:"IBM Plex Mono",monospace;}
+  .candidate-card .clabel{color:#8B90A0; font-size:12.5px; margin-top:2px;}
+
+  .mockup-section-title{
+    color:#E7E8EF; font-size:13.5px; font-weight:600; margin:0 0 12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .mockup-section-title .badge{
+    font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:500;
+    color:var(--cat); background:rgba(123,94,167,0.2);
+    padding:2px 7px; border-radius:100px; letter-spacing:.03em;
+  }
+  .comp-bars{display:flex; flex-direction:column; gap:12px; margin-bottom:22px;}
+  .comp-bar-top{display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;}
+  .comp-bar-top .cn{color:#E7E8EF; font-weight:500;}
+  .comp-bar-top .cv{color:#8B90A0; font-family:"IBM Plex Mono",monospace;}
+  .comp-bar-bg{width:100%; height:8px; border-radius:100px; background:#23262F; overflow:hidden;}
+  .comp-bar-fill{height:100%; border-radius:100px; background:var(--cat);}
+
+  .notice-card{
+    background:#15171F; border:1px solid #3A3450; border-radius:10px;
+    padding:14px 16px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .notice-card svg{width:18px; height:18px; color:#C9A9F0; flex:0 0 auto; margin-top:1px;}
+  .notice-card p{margin:0; color:#DEDFE7; font-size:15.5px; line-height:1.55;}
+  .notice-card b{color:#fff;}
+
+  /* ---------- TECH GRID ---------- */
+  .grid2{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));
+    gap:16px;
+  }
+  .tcard{
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:#fff; padding:20px;
+  }
+  .tcard.caution{
+    background:#FBF6EF; border-color:#EAD9BC;
+  }
+  .tcard-top{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .tcard-icon{
+    width:32px; height:32px; border-radius:8px;
+    background:color-mix(in srgb, var(--cat) 14%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .tcard.caution .tcard-icon{background:#F3E3C4; color:#8A5A12;}
+  .tcard-icon svg{width:17px; height:17px;}
+  .tcard h4{margin:0; font-size:15px; font-weight:600;}
+  .tcard p{margin:0; font-size:16.4px; color:var(--slate);}
+
+  footer.note{
+    text-align:center; color:var(--slate-2);
+    font-size:15.5px; padding:36px 24px 48px;
+  }
+
+  @media (max-width:560px){
+    .hero{padding:44px 18px 40px;}
+    main{padding:40px 16px 0;}
+    .candidate-cards{grid-template-columns:repeat(1,minmax(0,1fr));}
+  }
+
+  /* ── [인쇄/PDF] 문장이 페이지 경계에서 잘리지 않게 ──────────────── */
+  @media print{
+    .hero, .mockup-frame, .flow{overflow:visible;}
+    .card, .tcard, .flow-step, .insight-card, .notice-card,
+    .poster, .item-card, section{break-inside:avoid; page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="backbar">
+  <a class="back-link" href="../2_AI_활용_서비스.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    카탈로그로 돌아가기
+  </a>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">CATALOG // 04 · 채용·HR</span>
+    <div class="hero-top">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 8a3 3 0 11-6 0 3 3 0 016 0zM4 20c0-3 3.6-5 8-5s8 2 8 5"/></svg>
+      </div>
+      <h1>제네시스랩 (뷰인터HR) AI&nbsp;역량평가 시스템<span>AI VIDEO INTERVIEW &amp; COMPETENCY ASSESSMENT</span></h1>
+    </div>
+    <p class="lead">
+      지원자의 화상 면접 영상에서 <b style="color:#E7E8EF;">표정·음성·답변 내용</b>을 함께 분석해,
+      직무 역량을 점수화한 리포트를 채용 담당자에게 제공하는 AI&nbsp;면접·역량검사 솔루션입니다.
+      아래에서 작동 원리를 단계별로 살펴봅니다.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">#멀티모달분석</span>
+      <span class="tag">#음성감정분석</span>
+      <span class="tag">#자연어처리</span>
+      <span class="tag">#역량모델링</span>
+      <span class="tag">#AI윤리쟁점</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== STEP FLOW ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">HOW IT WORKS</span>
+      <h2 class="section-title">역량 리포트가 만들어지는 4단계</h2>
+      <p class="section-desc">지원자가 촬영한 답변 영상 한 편은 아래 파이프라인을 거쳐 역량 점수 리포트로 정리됩니다.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num">STEP 01</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="4" width="14" height="16" rx="2"/><circle cx="12" cy="9" r="2"/><path d="M8.5 15c.7-1.6 2-2.4 3.5-2.4s2.8.8 3.5 2.4"/></svg></div>
+        <h4>지원 정보 · 면접 영상 수집</h4>
+        <p>이력서·자기소개서 텍스트와, 정해진 질문에 답하는 지원자의 화상 면접 영상을 함께 수집합니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 02</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="12" r="2.4"/><circle cx="17" cy="7" r="2.4"/><circle cx="17" cy="17" r="2.4"/><path d="M9 11l6-3M9 13l6 3"/></svg></div>
+        <h4>멀티모달 분석</h4>
+        <p>표정·시선(영상), 음성 톤·속도(음성), 답변 내용(텍스트)을 각각의 AI&nbsp;모델로 동시에 분석합니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 03</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>직무 역량 점수화</h4>
+        <p>기업이 정의한 직무 역량 모델(문제해결력, 협업역량 등)에 맞춰 분석 결과를 항목별 점수로 변환합니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 04</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <h4>결과 리포트 제공</h4>
+        <p>역량 프로파일과 참고 지표를 리포트로 정리해 채용 담당자의 서류·면접 전형 판단을 보조합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIMPLE EXPLAINER ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">SIMPLE EXPLAINER</span>
+      <h2 class="section-title">한 문장으로 이해하는 분석 원리</h2>
+      <p class="section-desc">위 4단계를 아주 단순화하면 이렇습니다 — "면접 영상 하나를 세 가지 관점(표정·목소리·말의 내용)으로 나눠 보고, 이를 합쳐 점수를 매기는 것"입니다.</p>
+    </div>
+    <div class="diagram-card">
+      <div class="simple-flow">
+        <div class="source-stage">
+          <div class="video-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg>
+          </div>
+          <div class="source-label">지원자 답변 영상</div>
+          <div class="source-sub">"팀 프로젝트 갈등을 어떻게<br>해결했나요?"</div>
+        </div>
+
+        <div class="simple-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="signal-stage">
+          <div class="signal-chip" style="background:#7B5EA7">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.2 2.4 1.8 4 1.8s3-.6 4-1.8M9 10h.01M15 10h.01"/></svg>
+            표정 · 시선 분석
+          </div>
+          <div class="signal-chip" style="background:#2F8FD1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V6l10-2v12M9 18a3 3 0 11-3-3 3 3 0 013 3zM19 16a3 3 0 11-3-3 3 3 0 013 3z"/></svg>
+            음성 톤 · 속도 분석
+          </div>
+          <div class="signal-chip" style="background:#3A5CCC">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            답변 내용(텍스트) 분석
+          </div>
+        </div>
+
+        <div class="simple-connector">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M4 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="score-stage">
+          <div class="score-row">
+            <div class="score-row-top"><span class="qname">문제해결력</span><span class="qval">82</span></div>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:82%;"></div></div>
+          </div>
+          <div class="score-row">
+            <div class="score-row-top"><span class="qname">협업역량</span><span class="qval">76</span></div>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:76%;"></div></div>
+          </div>
+          <div class="score-row">
+            <div class="score-row-top"><span class="qname">커뮤니케이션</span><span class="qval">88</span></div>
+            <div class="score-bar-bg"><div class="score-bar-fill" style="width:88%;"></div></div>
+          </div>
+        </div>
+      </div>
+      <p class="diagram-caption">세 가지 신호를 종합한 점수는 최종 합격 여부를 자동으로 결정하는 것이 아니라, 채용 담당자의 판단을 돕는 참고 자료로 활용되는 것이 일반적입니다.</p>
+    </div>
+  </section>
+
+  <!-- ===== MOCKUP ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">CONCEPT MOCKUP</span>
+      <h2 class="section-title">채용 담당자 대시보드 개념 목업</h2>
+      <p class="section-desc">실제 뷰인터HR 화면이 아닌, 분석 결과가 화면에 어떻게 반영되는지 보여주기 위해 제작한 개념 목업입니다.</p>
+    </div>
+    <div class="mockup-frame">
+      <div class="mockup-topbar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url">example-hr.app / candidates</span>
+      </div>
+      <div class="mockup-body">
+        <p class="mockup-greeting">2026 상반기 공채 · 지원자 역량 리포트</p>
+        <p class="mockup-sub">면접 영상 128건 분석 완료</p>
+
+        <div class="candidate-cards">
+          <div class="candidate-card">
+            <div class="cname">지원자 A-014</div>
+            <div class="cscore">86</div>
+            <div class="clabel">종합 역량 점수</div>
+          </div>
+          <div class="candidate-card">
+            <div class="cname">지원자 A-027</div>
+            <div class="cscore">79</div>
+            <div class="clabel">종합 역량 점수</div>
+          </div>
+          <div class="candidate-card">
+            <div class="cname">지원자 A-041</div>
+            <div class="cscore">91</div>
+            <div class="clabel">종합 역량 점수</div>
+          </div>
+        </div>
+
+        <p class="mockup-section-title">지원자 A-014 역량 상세 <span class="badge">COMPETENCY BREAKDOWN</span></p>
+        <div class="comp-bars">
+          <div>
+            <div class="comp-bar-top"><span class="cn">문제해결력</span><span class="cv">82 / 100</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:82%;"></div></div>
+          </div>
+          <div>
+            <div class="comp-bar-top"><span class="cn">협업역량</span><span class="cv">76 / 100</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:76%;"></div></div>
+          </div>
+          <div>
+            <div class="comp-bar-top"><span class="cn">커뮤니케이션</span><span class="cv">88 / 100</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:88%;"></div></div>
+          </div>
+          <div>
+            <div class="comp-bar-top"><span class="cn">직무 이해도</span><span class="cv">80 / 100</span></div>
+            <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:80%;"></div></div>
+          </div>
+        </div>
+
+        <p class="mockup-section-title">참고 안내 <span class="badge">FOR REFERENCE ONLY</span></p>
+        <div class="notice-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17.5A1.6 1.6 0 004.1 20h15.8a1.6 1.6 0 001.4-2.5L13.7 3.9a1.6 1.6 0 00-2.8 0z"/></svg>
+          <p>이 점수는 <b>참고 자료</b>이며, 최종 합격 여부는 채용 담당자의 종합적인 판단으로 결정됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECH GRID ===== -->
+  <section style="margin-bottom:20px;">
+    <div class="section-head">
+      <span class="section-code">KEY TECHNIQUES</span>
+      <h2 class="section-title">핵심 기술 요소</h2>
+    </div>
+    <div class="grid2">
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.2 2.4 1.8 4 1.8s3-.6 4-1.8M9 10h.01M15 10h.01"/></svg></div>
+          <h4>표정 · 시선 인식</h4>
+        </div>
+        <p>컴퓨터 비전으로 얼굴의 표정 변화와 시선 처리를 분석해 답변 태도와 관련된 신호를 추출합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V6l10-2v12M9 18a3 3 0 11-3-3 3 3 0 013 3zM19 16a3 3 0 11-3-3 3 3 0 013 3z"/></svg></div>
+          <h4>음성 · 감정 분석</h4>
+        </div>
+        <p>말의 속도, 억양, 떨림 등 음성 신호를 분석해 자신감이나 긴장도 같은 특성을 참고 지표로 산출합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+          <h4>자연어처리(NLP)</h4>
+        </div>
+        <p>답변의 논리 구조와 핵심 키워드를 분석해 직무 관련성과 답변의 구체성을 평가합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h3v8H8zM13 12h3v4h-3z"/></svg></div>
+          <h4>직무 역량 모델링</h4>
+        </div>
+        <p>기업·직무별로 중요하게 보는 역량 항목과 가중치를 미리 정의해, 분석 결과를 해당 기준에 맞춰 점수화합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.4-3 7.8-7 9-4-1.2-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h4>영상 · 개인정보 보안</h4>
+        </div>
+        <p>지원자의 얼굴·음성 데이터는 민감정보인 만큼, 암호화 저장과 접근 권한 제한, 일정 기간 후 파기 등의 관리가 필요합니다.</p>
+      </div>
+      <div class="tcard caution">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10.3 3.9L2.7 17.5A1.6 1.6 0 004.1 20h15.8a1.6 1.6 0 001.4-2.5L13.7 3.9a1.6 1.6 0 00-2.8 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+          <h4>편향성 · 공정성 쟁점</h4>
+        </div>
+        <p>학습 데이터에 따라 특정 억양·표현 방식이 불리하게 평가될 수 있습니다. 글로벌 솔루션 <b>HireVue가 편향 우려로 표정(안면) 분석을 폐기</b>하고 언어 분석 중심으로 전환한 것이 대표 사례이며, EU AI Act도 채용·인사&nbsp;AI를 <b>고위험</b>으로 분류합니다.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="note">
+  본 페이지는 교육 목적의 개념 설명 자료이며, 실제 뷰인터HR 화면이나 알고리즘 구현과 다를 수 있습니다 ·
+  "제네시스랩" 및 "뷰인터HR"은 (주)제네시스랩의 상표이며 본 자료와 무관합니다 · 목업의 이름·점수는 모두 가상의 예시입니다
+</footer>
+
+</body>
+</html>

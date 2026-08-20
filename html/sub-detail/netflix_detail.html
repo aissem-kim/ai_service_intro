@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>넷플릭스 추천 시스템 | AI&nbsp;활용 서비스 카탈로그</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171F;
+    --paper:#F7F7F4;
+    --paper-2:#EFEFEA;
+    --line:#E1E1DB;
+    --slate:#565B66;
+    --slate-2:#8B90A0;
+    --cat:#1B998B;      /* 추천·개인화 카테고리 색상과 동일 계열 */
+    --cat-ink:#0E4A43;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    /* 한국어 줄바꿈: 어절(단어) 중간에서 끊기지 않게 */
+    word-break:keep-all;
+    overflow-wrap:break-word;
+  }
+  /* 코드·URL 등 긴 영문 문자열은 예외적으로 어디서든 끊기 허용 */
+  code, pre, .mono, a[href^="http"]{overflow-wrap:anywhere;}
+  /* flex/grid 자식이 콘텐츠 최소너비 때문에 넘쳐 잘리는 것 방지 */
+  .flow-step, .tcard, .poster, .grid2 > *, .mockup-cards > *{min-width:0;}
+
+  /* ── [문장 잘림 방지] 공통 규칙 ─────────────────────────────────────
+     grid/flex 자식은 기본값(min-width:auto)이라 "가장 긴 어절" 아래로는
+     줄어들지 않습니다. 그래서 칸 밖으로 밀려나고, 부모의 overflow:hidden
+     때문에 문장 끝이 잘립니다. 아래 규칙으로 모든 자식이 줄어들 수 있게
+     만들어 잘리는 대신 줄바꿈되도록 합니다. */
+  .flow > *, .stat-cards > *, .mockup-cards > *, .grid2 > *,
+  .grid > *, .hero-top > *, .simple-flow > *, .toc-card > *{min-width:0;}
+  .flow, .stat-cards, .mockup-cards, .grid2, .grid{min-width:0;}
+
+  /* 좌우 양끝 정렬(space-between) 칩 — 왼쪽 라벨이 길어도
+     오른쪽 값이 칸 밖으로 밀려나지 않게 합니다. */
+  .receipt-chip, .cat-chip, .act-chip, .style-chip,
+  .report-row-top, .cat-bar-top, .score-row-top, .comp-bar-top{gap:10px;}
+  .receipt-chip > *, .cat-chip > *, .act-chip > *, .style-chip > *,
+  .report-row-top > *, .cat-bar-top > *, .score-row-top > *,
+  .comp-bar-top > *{min-width:0;}
+
+  /* 고정 폭 스테이지가 좁은 화면에서 화면 밖으로 나가지 않도록 */
+  .simple-stage, .source-stage, .signal-stage, .score-stage,
+  .simple-user, .simple-match, .chip-row{max-width:100%;}
+  .mockup-row-title{flex-wrap:wrap;}
+  .mono{font-family:"IBM Plex Mono",monospace;}
+
+  /* ---------- BACK BAR ---------- */
+  .backbar{
+    max-width:1040px; margin:0 auto; padding:20px 24px 0;
+  }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:15.5px; font-weight:500;
+    color:var(--slate); text-decoration:none;
+    font-family:"IBM Plex Mono",monospace;
+  }
+  .back-link:hover{color:var(--cat);}
+  .back-link svg{width:14px; height:14px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:52px 24px 48px;
+    position:relative;
+    overflow:hidden;
+    margin-top:18px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    right:-100px; top:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(27,153,139,0.30) 0%, rgba(27,153,139,0) 70%);
+  }
+  .hero-inner{max-width:1040px; margin:0 auto; position:relative;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14.5px; letter-spacing:.12em;
+    color:var(--cat); text-transform:uppercase;
+    border:1px solid rgba(27,153,139,0.45);
+    padding:6px 12px; border-radius:100px;
+    margin-bottom:20px;
+  }
+  .eyebrow::before{content:"●"; font-size:8px;}
+  .hero-top{display:flex; align-items:center; gap:16px; margin-bottom:18px;}
+  .brand-mark{
+    width:54px; height:54px; border-radius:14px;
+    background:color-mix(in srgb, var(--cat) 20%, var(--ink));
+    border:1px solid rgba(27,153,139,0.4);
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .brand-mark svg{width:28px; height:28px; color:var(--cat);}
+  h1{
+    font-size:clamp(26px,4vw,38px);
+    line-height:1.25;
+    margin:0;
+    font-weight:700;
+    letter-spacing:-0.01em;
+  }
+  h1 span{color:var(--cat); font-weight:400; font-size:0.55em; display:block; margin-top:4px; font-family:"IBM Plex Mono",monospace; letter-spacing:.02em;}
+  .hero p.lead{
+    font-size:19px;
+    color:#C7C9D4;
+    max-width:none; /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+    margin:0 0 24px;
+  }
+  .hero-tags{display:flex; flex-wrap:wrap; gap:8px;}
+  .tag{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px; letter-spacing:.03em;
+    padding:6px 11px; border-radius:100px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.14);
+    color:#DEDFE7;
+  }
+
+  main{max-width:1040px; margin:0 auto; padding:52px 24px 0;}
+
+  .section-head{margin-bottom:22px;}
+  .section-code{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:14px; letter-spacing:.1em;
+    color:var(--cat); font-weight:600;
+    margin-bottom:6px; display:block;
+  }
+  .section-title{font-size:23px; font-weight:700; margin:0 0 8px;}
+  .section-desc{font-size:17.5px; color:var(--slate); max-width:none; margin:0;} /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+
+  section{margin-bottom:56px;}
+
+  /* ---------- STEP FLOW ---------- */
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:0;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .flow-step{
+    padding:22px 18px;
+    border-right:1px solid var(--line);
+    position:relative;
+  }
+  .flow-step:last-child{border-right:none;}
+  .flow-num{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:13px; color:var(--cat); font-weight:600;
+    letter-spacing:.08em;
+    margin-bottom:10px; display:block;
+  }
+  .flow-icon{
+    width:36px; height:36px; border-radius:9px;
+    background:color-mix(in srgb, var(--cat) 12%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:12px;
+  }
+  .flow-icon svg{width:19px; height:19px;}
+  .flow-step h4{margin:0 0 6px; font-size:14.5px; font-weight:600;}
+  .flow-step p{margin:0; font-size:15.8px; color:var(--slate);}
+  .flow-arrow{
+    position:absolute; right:-9px; top:50%; transform:translateY(-50%);
+    width:18px; height:18px; border-radius:50%;
+    background:var(--paper); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+  }
+  .flow-arrow svg{width:9px; height:9px; color:var(--slate-2);}
+
+  /* 4칸이 좁아지면 문장이 뭉개지므로 2칸 → 1칸으로 단계적으로 접습니다 */
+  @media (max-width:980px){
+    .flow{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .flow-step:nth-child(2n){border-right:none;}
+    .flow-step:nth-child(-n+2){border-bottom:1px solid var(--line);}
+    .flow-step:nth-child(2n) .flow-arrow{display:none;}
+  }
+
+  @media (max-width:760px){
+    .flow{grid-template-columns:minmax(0,1fr);}
+    .flow-step{border-right:none; border-bottom:1px solid var(--line);}
+    .flow-step:last-child{border-bottom:none;}
+    .flow-arrow{display:none;}
+  }
+
+  /* ---------- DIAGRAM CARD ---------- */
+  .diagram-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; text-align:center;
+  }
+  .diagram-card svg{max-width:100%; height:auto;}
+  .diagram-caption{
+    margin-top:16px; font-size:16px; color:var(--slate);
+    max-width:none; /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+  }
+
+  /* ---------- 평점 행렬(협업 필터링) 표 ---------- */
+  .matrix-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  table.matrix{
+    border-collapse:separate; border-spacing:3px;
+    margin:0 auto; font-size:20px; font-weight:600;
+  }
+  table.matrix th, table.matrix td{
+    padding:14px 18px; text-align:center;
+    border-radius:8px; min-width:74px;
+    border:1px solid rgba(20,23,31,0.06);
+  }
+  table.matrix thead th{
+    background:#ECEDF1; color:#B4566A;
+    font-size:15px; line-height:1.35; font-weight:700;
+  }
+  table.matrix thead th:first-child{background:#ECEDF1;}
+  table.matrix tbody th{
+    background:#fff; color:var(--ink);
+    text-align:left; font-size:17px; font-weight:600;
+  }
+  /* 파스텔 팔레트: 점수별 색상 */
+  .r1{background:#FCE3C8; color:#8A5A28;}   /* 1점 - 파스텔 오렌지 */
+  .r2{background:#F7DCEC; color:#8C4A72;}   /* 2점 - 파스텔 핑크 */
+  .r3{background:#FBF3C4; color:#8A7A1E;}   /* 3점 - 파스텔 옐로 */
+  .r4{background:#DCEBD8; color:#4A6E44;}   /* 4점 - 파스텔 그린 */
+  .r5{background:#DAE5F4; color:#3F5C86;}   /* 5점 - 파스텔 블루 */
+  .r-unknown{
+    background:#fff; color:#C0576C;
+    border:2px dashed #C0576C; font-weight:700;
+  }
+  .matrix-legend{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:8px 12px;
+    margin-top:16px; font-size:14.5px; color:var(--slate);
+  }
+  .matrix-legend span{
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .matrix-legend i{
+    width:14px; height:14px; border-radius:4px; display:inline-block;
+    border:1px solid rgba(20,23,31,0.08);
+  }
+  .source-note{
+    margin-top:14px; font-size:14.5px; color:var(--slate-2);
+    text-align:center;
+  }
+  .source-note a{color:var(--cat); word-break:break-all;}
+  @media (max-width:560px){
+    table.matrix{font-size:17px;}
+    table.matrix th, table.matrix td{padding:10px 11px; min-width:56px;}
+  }
+
+  /* ---------- SIMPLE EXPLAINER ---------- */
+  .simple-flow{
+    display:flex; align-items:center; justify-content:center;
+    gap:28px; flex-wrap:wrap;
+  }
+  .simple-user{
+    display:flex; flex-direction:column; align-items:center;
+    width:200px;
+  }
+  .avatar-circle{
+    width:56px; height:56px; border-radius:50%;
+    background:color-mix(in srgb, var(--cat) 14%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:10px;
+  }
+  .avatar-circle svg{width:28px; height:28px;}
+  .simple-user-label{
+    font-size:16px; font-weight:600; color:var(--ink);
+    margin-bottom:14px;
+  }
+  .simple-user-label span{
+    font-weight:400; color:var(--slate-2); font-size:14px;
+  }
+  .chip-row{
+    display:flex; flex-direction:column; gap:7px; width:100%;
+  }
+  .content-chip{
+    font-size:14.5px; font-weight:500;
+    padding:8px 12px; border-radius:8px;
+    border:1px solid var(--line);
+    text-align:left;
+  }
+  .content-chip.watched{
+    background:color-mix(in srgb, var(--cat) 10%, white);
+    border-color:color-mix(in srgb, var(--cat) 35%, var(--line));
+    color:var(--cat-ink);
+  }
+  .content-chip.unknown{
+    background:#FFF3EA;
+    border-color:#FFD5AE;
+    color:#7A3A11;
+    font-weight:600;
+  }
+  .simple-match{
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    width:120px; flex:0 0 auto;
+    padding-top:70px;
+  }
+  .match-badge{
+    font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:600;
+    color:var(--cat); background:color-mix(in srgb, var(--cat) 12%, white);
+    padding:5px 10px; border-radius:100px; white-space:nowrap;
+  }
+  .match-line{width:100%; height:16px;}
+  .simple-result{
+    margin-top:26px; padding-top:20px; border-top:1px dashed var(--line);
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-size:17.5px; color:var(--ink);
+  }
+  .simple-result svg{width:18px; height:18px; color:var(--cat); flex:0 0 auto;}
+  .simple-result b{color:var(--cat-ink);}
+  @media (max-width:640px){
+    .simple-match{padding-top:0; flex-direction:row; width:100%;}
+    .match-line{display:none;}
+  }
+
+  /* ---------- MOCKUP ---------- */
+  .mockup-frame{
+    background:#0B0D12;
+    border-radius:16px;
+    padding:0;
+    overflow:hidden;
+    border:1px solid #23262F;
+  }
+  .mockup-topbar{
+    display:flex; align-items:center; gap:8px;
+    padding:12px 18px;
+    border-bottom:1px solid #23262F;
+  }
+  .mockup-topbar .dot{width:9px; height:9px; border-radius:50%; background:#3A3E4A;}
+  .mockup-topbar .url{
+    font-family:"IBM Plex Mono",monospace; font-size:13.5px; color:#6B7080;
+    margin-left:10px;
+  }
+  .mockup-body{padding:26px 24px 30px;}
+  .mockup-greeting{
+    color:#F1F1F0; font-size:17px; font-weight:600; margin:0 0 3px;
+  }
+  .mockup-sub{color:#8B90A0; font-size:14px; margin:0 0 20px; font-family:"IBM Plex Mono",monospace;}
+  .mockup-row{margin-bottom:22px;}
+  .mockup-row-title{
+    color:#E7E8EF; font-size:13.5px; font-weight:600; margin:0 0 10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .mockup-row-title .badge{
+    font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:500;
+    color:var(--cat); background:rgba(27,153,139,0.15);
+    padding:2px 7px; border-radius:100px; letter-spacing:.03em;
+  }
+  .mockup-cards{
+    display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px;
+  }
+  .poster{
+    aspect-ratio:2/3; border-radius:6px;
+    display:flex; align-items:flex-end;
+    padding:8px; position:relative;
+    /* overflow:hidden 이면 grid 아이템의 자동 최소높이가 0이 되어
+       제목이 두 줄 이상일 때 aspect-ratio 높이 밖으로 잘립니다.
+       visible 로 두면 제목이 길어질 때 카드가 세로로 늘어납니다. */
+    overflow:visible;
+  }
+  .poster span{
+    color:rgba(255,255,255,0.92); font-size:12.5px; font-weight:600;
+    line-height:1.3; position:relative; z-index:2;
+  }
+  .poster::after{
+    content:""; position:absolute; inset:0; border-radius:inherit;
+    background:linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55) 100%);
+  }
+  .poster.match-high::before{
+    content:"매치 " attr(data-score) "%";
+    position:absolute; top:6px; left:6px;
+    font-family:"IBM Plex Mono",monospace; font-size:9px; font-weight:600;
+    color:#0B0D12; background:var(--cat);
+    padding:2px 6px; border-radius:100px; z-index:2;
+  }
+  @media (max-width:860px){ .mockup-cards{grid-template-columns:repeat(4,minmax(0,1fr));} }
+  @media (max-width:640px){ .mockup-cards{grid-template-columns:repeat(3,minmax(0,1fr));} }
+  @media (max-width:440px){ .mockup-cards{grid-template-columns:repeat(2,minmax(0,1fr));} }
+
+  /* ---------- TECH GRID ---------- */
+  .grid2{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr));
+    gap:16px;
+  }
+  .tcard{
+    border:1px solid var(--line); border-radius:var(--radius);
+    background:#fff; padding:20px;
+  }
+  .tcard-top{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .tcard-icon{
+    width:32px; height:32px; border-radius:8px;
+    background:color-mix(in srgb, var(--cat) 14%, white);
+    color:var(--cat);
+    display:flex; align-items:center; justify-content:center; flex:0 0 auto;
+  }
+  .tcard-icon svg{width:17px; height:17px;}
+  .tcard h4{margin:0; font-size:15px; font-weight:600;}
+  .tcard p{margin:0; font-size:16.4px; color:var(--slate);}
+
+  /* ---------- PANEL ---------- */
+  .panel{
+    background:var(--ink); color:var(--paper);
+    border-radius:20px;
+    padding:32px;
+  }
+  .panel h2{margin:0 0 10px; font-size:19px;}
+  .panel p{color:#C7C9D4; font-size:17.2px; max-width:none; margin:0 0 18px;} /* 문장이 일찍 끊기지 않도록 폭 제한 해제 */
+  .panel ul{color:#DEDFE7; font-size:17px; padding-left:20px; margin:0;}
+  .panel ul li{margin-bottom:7px;}
+
+  footer.note{
+    text-align:center; color:var(--slate-2);
+    font-size:15.5px; padding:36px 24px 48px;
+  }
+
+  @media (max-width:560px){
+    .hero{padding:44px 18px 40px;}
+    main{padding:40px 16px 0;}
+    .panel{padding:24px 20px;}
+  }
+
+  /* ── [인쇄/PDF] 문장이 페이지 경계에서 잘리지 않게 ──────────────── */
+  @media print{
+    .hero, .mockup-frame, .flow{overflow:visible;}
+    .card, .tcard, .flow-step, .insight-card, .notice-card,
+    .poster, .item-card, section{break-inside:avoid; page-break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+
+<div class="backbar">
+  <a class="back-link" href="../2_AI_활용_서비스.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    카탈로그로 돌아가기
+  </a>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">CATALOG // 01 · 추천·개인화</span>
+    <div class="hero-top">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 15l3-3 2 2 4-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h1>넷플릭스 (Netflix) 추천 시스템<span>PERSONALIZED RECOMMENDATION ENGINE</span></h1>
+    </div>
+    <p class="lead">
+      시청 이력·평점·검색·체류 시간 같은 행동 데이터를 <b style="color:#E7E8EF;">협업 필터링(Collaborative Filtering)</b>과
+      <b style="color:#E7E8EF;">딥러닝 기반 임베딩(Embedding)</b>으로 분석해, 회원 한 명 한 명에게 서로 다른 콘텐츠 목록과
+      섬네일을 구성합니다. 아래에서 작동 원리를 단계별로 살펴봅니다.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">#협업필터링</span>
+      <span class="tag">#딥러닝임베딩</span>
+      <span class="tag">#개인화순위</span>
+      <span class="tag">#A/B테스트</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== STEP FLOW ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">HOW IT WORKS</span>
+      <h2 class="section-title">추천이 만들어지는 4단계</h2>
+      <p class="section-desc">넷플릭스 화면에 뜨는 "회원님을 위한 추천" 한 줄은 아래 파이프라인을 거쳐 실시간에 가깝게 계산됩니다.</p>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <span class="flow-num">STEP 01</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg></div>
+        <h4>행동 데이터 수집</h4>
+        <p>시청 여부·완주율·일시정지·평점·검색어·재생 시간대를 이벤트 로그로 수집합니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 02</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="7" cy="12" r="2.4"/><circle cx="17" cy="7" r="2.4"/><circle cx="17" cy="17" r="2.4"/><path d="M9 11l6-3M9 13l6 3"/></svg></div>
+        <h4>임베딩 학습</h4>
+        <p>사용자와 콘텐츠를 같은 벡터 공간에 투영하는 딥러닝 모델을 학습시켜, 취향이 비슷하면 벡터도 가까워지게 만듭니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 03</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h4>후보 랭킹</h4>
+        <p>벡터 유사도로 수만 개 콘텐츠 중 후보를 추리고, 최근 관심사에 가중치를 둬 순위를 매깁니다.</p>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg></div>
+      </div>
+      <div class="flow-step">
+        <span class="flow-num">STEP 04</span>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg></div>
+        <h4>화면 구성 · 실험</h4>
+        <p>행 순서·섬네일까지 회원별로 다르게 노출하고, A/B 테스트로 효과를 검증해 계속 개선합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SIMPLE EXPLAINER ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">SIMPLE EXPLAINER</span>
+      <h2 class="section-title">한 문장으로 이해하는 추천 원리</h2>
+      <p class="section-desc">위 4단계를 아주 단순화하면 이렇습니다 — "나와 취향이 비슷한 사람이 본 것 중, 내가 아직 안 본 것"을 찾아 보여주는 것입니다.</p>
+    </div>
+    <div class="diagram-card">
+      <div class="simple-flow">
+        <div class="simple-user">
+          <div class="avatar-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.6 3.8-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+          </div>
+          <div class="simple-user-label">회원 A</div>
+          <div class="chip-row">
+            <span class="content-chip watched">영화 1 ✓</span>
+            <span class="content-chip watched">영화 2 ✓</span>
+            <span class="content-chip unknown">영화 3 ?</span>
+          </div>
+        </div>
+
+        <div class="simple-match">
+          <span class="match-badge">취향 비슷함</span>
+          <svg viewBox="0 0 100 24" class="match-line"><path d="M2 12h96" stroke="#1B998B" stroke-width="2" stroke-dasharray="4 5"/></svg>
+        </div>
+
+        <div class="simple-user">
+          <div class="avatar-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c1.2-3.6 3.8-5.4 7-5.4s5.8 1.8 7 5.4"/></svg>
+          </div>
+          <div class="simple-user-label">회원 B <span>(비슷한 취향)</span></div>
+          <div class="chip-row">
+            <span class="content-chip watched">영화 1 ✓</span>
+            <span class="content-chip watched">영화 2 ✓</span>
+            <span class="content-chip watched">영화 3 ✓</span>
+          </div>
+        </div>
+      </div>
+      <div class="simple-result">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v14M6 12l6 6 6-6"/></svg>
+        회원 B가 재미있게 본 <b>"영화 3"</b>을 회원 A에게 추천합니다
+      </div>
+      <p class="diagram-caption">실제로는 회원 수만큼 이 비교를 동시에, 수많은 콘텐츠를 대상으로 계산합니다. 이 단순한 원리를 컴퓨터가 빠르고 정교하게 수행하도록 만든 것이 딥러닝 기반 추천 모델입니다.</p>
+    </div>
+
+    <div class="diagram-card" style="margin-top:20px;">
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th></th>
+              <th>영화<br>1</th><th>영화<br>2</th><th>영화<br>3</th><th>영화<br>4</th><th>영화<br>5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>Amy</th>
+              <td class="r3">3</td><td class="r1">1</td><td class="r1">1</td><td class="r3">3</td><td class="r1">1</td>
+            </tr>
+            <tr>
+              <th>Bill</th>
+              <td class="r1">1</td><td class="r2">2</td><td class="r4">4</td><td class="r1">1</td><td class="r3">3</td>
+            </tr>
+            <tr>
+              <th>Chris</th>
+              <td class="r3">3</td><td class="r1">1</td><td class="r1">1</td><td class="r-unknown">?</td><td class="r1">1</td>
+            </tr>
+            <tr>
+              <th>Dan</th>
+              <td class="r4">4</td><td class="r3">3</td><td class="r5">5</td><td class="r4">4</td><td class="r4">4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="matrix-legend">
+        <span><i style="background:#FCE3C8"></i>1점</span>
+        <span><i style="background:#F7DCEC"></i>2점</span>
+        <span><i style="background:#FBF3C4"></i>3점</span>
+        <span><i style="background:#DCEBD8"></i>4점</span>
+        <span><i style="background:#DAE5F4"></i>5점</span>
+        <span><i style="background:#fff; border:2px dashed #C0576C"></i>아직 평가하지 않음</span>
+      </div>
+
+      <p class="diagram-caption">회원 4명이 영화 5편에 매긴 평점표입니다. <b>Chris의 영화 4 평점(?)</b>을 예측하는 것이 추천 시스템이 푸는 문제입니다. Chris의 평점 패턴(3·1·1·1)은 Amy(3·1·1·1)와 거의 같으므로, Amy가 영화 4에 준 <b>3점</b>을 Chris의 예상 평점으로 추정합니다. 반대로 Dan은 전반적으로 높은 점수를 주는 취향이라 참고 대상이 되기 어렵습니다. 이것이 <b>협업 필터링(Collaborative Filtering)</b>의 핵심 아이디어입니다.</p>
+
+      <p class="source-note">출처: <a href="https://www.itbiznews.com/news/articleView.html?idxno=45731" target="_blank" rel="noopener">https://www.itbiznews.com/news/articleView.html?idxno=45731</a></p>
+    </div>
+  </section>
+
+  <!-- ===== MOCKUP ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">CONCEPT MOCKUP</span>
+      <h2 class="section-title">개인화 화면 개념 목업</h2>
+      <p class="section-desc">실제 넷플릭스 화면이 아닌, 추천 알고리즘이 화면에 어떻게 반영되는지 보여주기 위해 제작한 개념 목업입니다. 회원마다 행 구성과 노출 순서, "매치율"이 달라진다는 점에 주목하세요.</p>
+    </div>
+    <div class="mockup-frame">
+      <div class="mockup-topbar">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="url">example-streaming.app / home</span>
+      </div>
+      <div class="mockup-body">
+        <p class="mockup-greeting">회원님을 위한 오늘의 추천</p>
+        <p class="mockup-sub">USER_EMBEDDING · 최근 시청 기반 · 실시간 갱신</p>
+
+        <div class="mockup-row">
+          <p class="mockup-row-title">회원님이 좋아할 만한 콘텐츠 <span class="badge">MATCH SCORE</span></p>
+          <div class="mockup-cards">
+            <div class="poster match-high" data-score="98" style="background:linear-gradient(160deg,#2B3A67,#1B998B)"><span>몰입형 SF 시리즈</span></div>
+            <div class="poster match-high" data-score="95" style="background:linear-gradient(160deg,#6B3A5A,#B14E6C)"><span>범죄 스릴러</span></div>
+            <div class="poster match-high" data-score="91" style="background:linear-gradient(160deg,#3A5CCC,#1B998B)"><span>휴먼 드라마</span></div>
+            <div class="poster match-high" data-score="88" style="background:linear-gradient(160deg,#7B5EA7,#3A5CCC)"><span>다큐멘터리</span></div>
+            <div class="poster match-high" data-score="86" style="background:linear-gradient(160deg,#2F8FD1,#1B998B)"><span>블랙코미디</span></div>
+          </div>
+        </div>
+
+        <div class="mockup-row">
+          <p class="mockup-row-title">최근 시청과 비슷한 작품 <span class="badge">COLLAB FILTERING</span></p>
+          <div class="mockup-cards">
+            <div class="poster" style="background:linear-gradient(160deg,#4A4E5A,#2B2E38)"><span>느와르 영화</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#5A4A3A,#2B2E38)"><span>미스터리</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#3A5A4A,#2B2E38)"><span>스페이스 오페라</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#5A3A4A,#2B2E38)"><span>로맨스</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#3A4A5A,#2B2E38)"><span>어드벤처</span></div>
+          </div>
+        </div>
+
+        <div class="mockup-row" style="margin-bottom:0;">
+          <p class="mockup-row-title">지금 뜨는 콘텐츠 <span class="badge">POPULARITY</span></p>
+          <div class="mockup-cards">
+            <div class="poster" style="background:linear-gradient(160deg,#8B90A0,#3A3E4A)"><span>서바이벌 예능</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#8B90A0,#3A3E4A)"><span>애니메이션</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#8B90A0,#3A3E4A)"><span>다큐 시리즈</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#8B90A0,#3A3E4A)"><span>액션 영화</span></div>
+            <div class="poster" style="background:linear-gradient(160deg,#8B90A0,#3A3E4A)"><span>시트콤</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECH GRID ===== -->
+  <section>
+    <div class="section-head">
+      <span class="section-code">KEY TECHNIQUES</span>
+      <h2 class="section-title">핵심 기술 요소</h2>
+    </div>
+    <div class="grid2">
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="8" r="2.5"/><circle cx="17" cy="8" r="2.5"/><circle cx="12" cy="17" r="2.5"/><path d="M8.6 9.6L11 15M15.4 9.6L13 15M9.5 8h5"/></svg></div>
+          <h4>협업 필터링</h4>
+        </div>
+        <p>"나와 비슷한 취향의 회원들이 좋아한 콘텐츠"를 서로 연결해 추천합니다. 콘텐츠 정보 없이 사용자–콘텐츠 상호작용 패턴만으로도 작동합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div>
+          <h4>콘텐츠 기반 필터링</h4>
+        </div>
+        <p>장르·배우·감독·줄거리 등 콘텐츠 자체의 속성을 비교해 "지금 본 작품과 비슷한 작품"을 추천합니다. 신작처럼 상호작용 데이터가 적을 때 특히 유용합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="1.6"/><circle cx="20" cy="6" r="1.6"/><circle cx="4" cy="18" r="1.6"/><circle cx="20" cy="18" r="1.6"/><path d="M6 7l4.5 3.5M18 7l-4.5 3.5M6 17l4.5-3.5M18 17l-4.5-3.5"/></svg></div>
+          <h4>딥러닝 임베딩</h4>
+        </div>
+        <p>사용자와 콘텐츠를 고차원 벡터로 표현해, 명시적으로 정의하기 어려운 미묘한 취향 패턴(예: 잔잔한 분위기 선호)까지 학습해 반영합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg></div>
+          <h4>A/B 테스트 · 실험</h4>
+        </div>
+        <p>새 추천 로직이나 섬네일을 일부 회원에게만 노출해 시청 지표(클릭률·완주율)를 비교한 뒤, 검증된 버전만 전체로 확대 적용합니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h3v8H8zM13 12h3v4h-3z"/></svg></div>
+          <h4>맥락 신호 반영</h4>
+        </div>
+        <p>시청 시간대, 요일, 함께 쓰는 프로필 여부 같은 맥락(context) 정보까지 반영해, 같은 사용자라도 상황에 따라 다른 추천을 보여줍니다.</p>
+      </div>
+      <div class="tcard">
+        <div class="tcard-top">
+          <div class="tcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c-4-3-8-6.6-8-11a5 5 0 019-3 5 5 0 019 3c0 4.4-4 8-8 11z"/></svg></div>
+          <h4>콜드 스타트 대응</h4>
+        </div>
+        <p>신규 가입자처럼 데이터가 부족한 경우, 가입 시 선택한 선호 장르나 인기 콘텐츠 기반의 임시 추천으로 시작해 점차 개인화를 강화합니다.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="note">
+  본 페이지는 교육 목적의 개념 설명 자료이며, 실제 넷플릭스 화면이나 알고리즘 구현과 다를 수 있습니다 ·
+  "넷플릭스"는 Netflix, Inc.의 상표이며 본 자료와 무관합니다 · 목업의 콘텐츠명은 모두 가상의 예시입니다
+</footer>
+
+</body>
+</html>
