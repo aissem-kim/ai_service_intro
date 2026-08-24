@@ -1,0 +1,22 @@
+
+1. 폴더 만들기
+
+2. VScode에서 열기
+
+3. GetStarted.py 만들기
+
+4. .env 만들고 GetStarted.py 수정하기
+
+5. 패키지 설치
+
+pip install -r requirements.txt
+
+--------------------------------
+
+[ 간단한 챗봇 확인 ]
+pip install streamlit
+
+> streamlit run 파일명
+
+-------------------------------
+
